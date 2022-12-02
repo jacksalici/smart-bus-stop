@@ -1,10 +1,13 @@
-# IoT powered Smart Bus Stop
+# 🚏 IoT powered smart bus stop
 
-Aimed at improving the mobility of citizens in a city/metropolis, that is, enabling fast, easy and safe travel.
+**To improve the mobility of citizens in a city/metropolis, that is, enabling fast, easy and safe travel, and at the same time, lower management costs for the administrators.**
 
-This project focuses on improving public transportation, particularly through buses. The aim is to create a smart bus stop, which allows easier access to the service and enables (through a network of such stations) an enhancement of the service.
 
-The smart bus stop is going to be equipped with a digital kiosk/totem device and a button board. A solar panel could also be provided to the station to make it self-sufficient during sunny hours.
+## Abstract
+
+This project, made as the final project of the IoT course of the Master's Degree in CS, focuses on improving public transportation, particularly through city buses. The aim is to create a smart bus stop, which allows easier access to the service and enables (through a network of such stations) an enhancement of the service.
+
+Each smart bus stop is going to be equipped with a digital kiosk/totem device and a button board. A solar panel could also be provided to the station to make it self-sufficient during sunny hours.
 
 The totem allows people to see the real-time location of public transportation, with any transit times through the various stations. It also makes it possible to purchase tickets on the spot, making it easy for people without a mobile device to reserve a seat and plan a trip. 
 There could be the possibility of authenticating people via NFC/RFID so that the user interface could be better profiled.
