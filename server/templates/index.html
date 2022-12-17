@@ -18,7 +18,7 @@
     />
     <link
       rel="stylesheet"
-      href="/style.css"
+      href="{{ url_for('static',filename='/style.css') }}"
       crossorigin=""
     />
 
@@ -32,6 +32,7 @@
       integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
       crossorigin=""
     ></script>
+   
     <title>Smart Bus Station System</title>
   </head>
   <body>
@@ -63,31 +64,37 @@
       </div>
     </nav>
 
-    <!--ALERT-->
-    <div class="container mt-4">
+    <!--ALERT
+    
       <div class="alert alert-primary mb-4" role="alert">
         Bus 12 seems to be late. Check it on the live map.
       </div>
-      <div id="map" style="width: 100%; height: 400px;" class="container-fluid"></div>
-
-
+      
+    </div>-->
+    <div class="container mt-4">
+        <div
+        id="map"
+        style="width: 100%; height: 500px"
+      ></div>
     </div>
 
-    
-
     <script>
-        var map = L.map('map',{
-            center: [44.6330, 10.9304],
-            zoom: 13,
-            
-        })
-        
-        map.attributionControl.setPrefix('')
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-            
-        }).addTo(map);
+      var map = L.map("map", {
+        center: [44.633, 10.9304],
+        zoom: 12,
+      });
+
+      const key = "zeNHm3ioxQhNUuX6E3yj";
+     
+      map.attributionControl.setPrefix("");
+
+      L.tileLayer(`https://api.maptiler.com/maps/basic-v2-light/{z}/{x}/{y}.png?key=${key}`,{ //style URL
+        tileSize: 512,
+        zoomOffset: -1,
+        minZoom: 1,
+        attribution: "&copy; <a href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"> MapTiler</a> and <a href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"> OpenStreetMap </a>",
+        crossOrigin: true
+      }).addTo(map);
 
     </script>
   </body>
