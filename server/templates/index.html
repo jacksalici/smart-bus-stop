@@ -32,7 +32,7 @@
       integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
       crossorigin=""
     ></script>
-   
+
     <title>Smart Bus Station System</title>
   </head>
   <body>
@@ -72,20 +72,17 @@
       
     </div>-->
     <div class="container mt-4">
-        <div
-        id="map"
-        style="width: 100%; height: 500px"
-      ></div>
+      <div id="map" style="width: 100%; height: 500px"></div>
     </div>
 
     <script>
       var map = L.map("map", {
-        center: [44.633, 10.9304],
+        center: {{stations[0].coord | safe}},
         zoom: 12,
       });
 
       const key = "zeNHm3ioxQhNUuX6E3yj";
-     
+
       map.attributionControl.setPrefix("");
 
       L.tileLayer(`https://api.maptiler.com/maps/basic-v2-light/{z}/{x}/{y}.png?key=${key}`,{ //style URL
@@ -93,9 +90,20 @@
         zoomOffset: -1,
         minZoom: 1,
         attribution: "&copy; <a href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"> MapTiler</a> and <a href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"> OpenStreetMap </a>",
-        crossOrigin: true
+        crossOrigin: true,
+        detectRetina:true
       }).addTo(map);
 
+      //https://img.icons8.com/color/48/null/bus.png
+      var busIcon = L.icon({
+       iconUrl: 'https://img.icons8.com/external-flaticons-flat-flat-icons/64/000000/external-bus-stop-traditional-marketing-flaticons-flat-flat-icons.png',
+      });
+
+    
+      {{stations|safe}}.forEach(station => {
+        L.marker(station.coord, {icon: busIcon}).addTo(map);
+      });
+      
     </script>
   </body>
 </html>

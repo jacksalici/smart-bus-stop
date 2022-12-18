@@ -11,9 +11,8 @@ with requests.get(CSV_URL, stream=True) as r:
      for station in obj:
           if station["Comune"].upper()=="MODENA":
                newobj.append({
-                    "name": station["Nome"].title(),
-                    "lon": station["Longitudine"],
-                    "lat": station["Latitudine"]
+                    'name': station["Nome"].title(),
+                    'coord': [float(station["Latitudine"]), float(station["Longitudine"])],
                })
      
      with open("modenaBusStationDataset.json", "w") as fd:
