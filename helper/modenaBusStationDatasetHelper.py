@@ -9,7 +9,7 @@ with requests.get(CSV_URL, stream=True) as r:
      obj = csv.DictReader(buff,delimiter=";")
      newobj = []
      for station in obj:
-          if station["Comune"].upper()=="MODENA":
+          if station["Comune"].upper()=="MODENA" and station["Nome"]!="" :
                newobj.append({
                     'name': station["Nome"].title(),
                     'coord': [float(station["Latitudine"]), float(station["Longitudine"])],

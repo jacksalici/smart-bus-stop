@@ -1,12 +1,12 @@
 {% extends 'baseof.html' %} {% block header %}
-<h1>{% block title %}Map{% endblock %}</h1>
+<h1>{% block title %}{{name}}{% endblock %}</h1>
 {% endblock %} {% block content %}
 
 <div id="map" style="width: 100%; height: 500px"></div>
 
 <script>
   var map = L.map("map", {
-    center: {{stations[0].coord | safe}},
+    center: {{stations | safe}}[0].coord,
     zoom: 12,
   });
 
@@ -20,17 +20,25 @@
     minZoom: 1,
     attribution: "&copy; <a href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"> MapTiler</a> and <a href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"> OpenStreetMap </a>",
     crossOrigin: true,
-    detectRetina:true
+    //detectRetina:true
   }).addTo(map);
 
   //https://img.icons8.com/color/48/null/bus.png
-  var busIcon = L.icon({
+  var busStopIcon = L.icon({
    iconUrl: 'https://img.icons8.com/external-flaticons-flat-flat-icons/64/000000/external-bus-stop-traditional-marketing-flaticons-flat-flat-icons.png',
   });
 
+  console.log({{stations |safe}})
 
-  {{stations|safe}}.forEach(station => {
-    L.marker(station.coord, {icon: busIcon}).addTo(map);
-  });
+  if ({{stations|safe}}[1]){
+    
+    {{stations|safe}}.forEach((station, index) => {
+      var text = `Bus Stop "${station.name}" - <a href="/${index}">View it</a>`
+      L.marker(station.coord, {icon: busStopIcon, alt: "Station " + station.name}).addTo(map).bindPopup(text);
+    });
+  } else {
+    var station = {{stations|safe}}[0]
+    L.marker(station.coord, {icon: busStopIcon, alt: "Station " + station.name}).addTo(map)
+  }
 </script>
 {% endblock %}
