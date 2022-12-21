@@ -18,7 +18,10 @@ def page(station):
 
 
 if __name__ == '__main__':
-    with open("./modenaBusStationDataset.json", "r") as file:
+   
+    
+    
+    with open("./busStopDatasetBologna.json", "r") as file:
         dataset=json.load(file)
 
     with open("./config.ini", "r") as file:
