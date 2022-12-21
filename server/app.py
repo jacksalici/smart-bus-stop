@@ -21,7 +21,7 @@ if __name__ == '__main__':
    
     
     
-    with open("./busStopDatasetBologna.json", "r") as file:
+    with open("./busStopDataset.json", "r") as file:
         dataset=json.load(file)
 
     with open("./config.ini", "r") as file:

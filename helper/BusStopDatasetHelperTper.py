@@ -3,12 +3,12 @@ import requests as re
 
 offset=0
 limit=100
-refine="refine.comune=PORTO+GARIBALDI"
+refine='comune%3A%22PORTO%20GARIBALDI%22'
 
 stations = []
 
 while True:
-    href=f'https://opendata.comune.bologna.it/api/v2/catalog/datasets/tper-fermate-autobus/records?limit={limit}&offset={offset}&refine=quartiere%3A%22Santo%20Stefano%22&timezone=UTC'
+    href=f'https://opendata.comune.bologna.it/api/v2/catalog/datasets/tper-fermate-autobus/records?limit={limit}&offset={offset}&refine={refine}&timezone=Europe%2FBerlin'
     res = json.loads(re.get(href).text)
     print(res)
     for record in res["records"]:
@@ -29,5 +29,5 @@ while True:
     offset+=limit
 
 print(stations)
-with open("busStopDatasetBologna.json", "w") as f:
+with open("busStopDataset.json", "w") as f:
     json.dump(stations, f)

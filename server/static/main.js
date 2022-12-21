@@ -36,9 +36,9 @@ if (stationsList[1]) {
     })
       .addTo(map)
       .bindPopup(text);
+    console.log(index)
   });
 } else {
-  var station = stationsList[0];
   L.marker(station.coord, {
     icon: busStopIcon,
     alt: "Station " + station.name,

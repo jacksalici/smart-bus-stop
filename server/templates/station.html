@@ -1,0 +1,14 @@
+{% extends 'baseof.html' %} {% block header %}
+<h1>{% block title %}{{name}}{% endblock %}</h1>
+{% endblock %} {% block content %}
+
+
+<div id="map" style="width: 100%; height: 500px"></div>
+
+<script>
+  const stationsList = {{ stations | safe}}
+</script>
+
+<script type="text/javascript"
+src="{{ url_for('static', filename='main.js') }}"></script>
+{% endblock %}
