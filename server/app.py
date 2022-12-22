@@ -13,7 +13,7 @@ def home():
 @app.route("/<station>")
 def page(station):
     nametext = "\""+ dataset[int(station)]["name"] + "\"" if dataset[int(station)]["name"] != "" else ""
-    return render_template('index.html', stations=[dataset[int(station)]], name="Bus Stop "+ nametext + " #"+station)
+    return render_template('station.html', stations=[dataset[int(station)]], name="Bus Stop "+ nametext + " #"+station)
 
 
 

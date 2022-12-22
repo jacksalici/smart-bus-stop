@@ -18,10 +18,12 @@ while True:
             "code": field["codice"],
             "coord": [field["geopoint"]["lat"],field["geopoint"]["lon"]]
         }
-        stations.append(station)
+        if station not in stations:
+            stations.append(station)
 
     mylen = int(res["total_count"])
-    if len(stations) == mylen:
+    
+    if offset+limit >= mylen:
         break
     else:
         print(len(stations))

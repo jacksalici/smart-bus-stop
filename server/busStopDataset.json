@@ -30,11 +30,6 @@
     "coord": [44.681935, 12.240802]
   },
   {
-    "name": "BAGNO ASTOR [034]",
-    "code": "606051",
-    "coord": [44.681935, 12.240802]
-  },
-  {
     "name": "VIA RIMEMBRANZE [030]",
     "code": "606073",
     "coord": [44.676886, 12.230314]
@@ -45,26 +40,6 @@
     "coord": [44.67646, 12.230101]
   },
   {
-    "name": "VIA RIMEMBRANZE [030]",
-    "code": "606074",
-    "coord": [44.67646, 12.230101]
-  },
-  {
-    "name": "VIALE BONNET - BANCA [036",
-    "code": "606075",
-    "coord": [44.677794, 12.236382]
-  },
-  {
-    "name": "VIALE BONNET - BANCA [036",
-    "code": "606075",
-    "coord": [44.677794, 12.236382]
-  },
-  {
-    "name": "VIALE BONNET - BANCA [036",
-    "code": "606075",
-    "coord": [44.677794, 12.236382]
-  },
-  {
     "name": "VIALE BONNET - BANCA [036",
     "code": "606075",
     "coord": [44.677794, 12.236382]
@@ -73,21 +48,6 @@
     "name": "VIALE BONNET [036]",
     "code": "606076",
     "coord": [44.677579, 12.234112]
-  },
-  {
-    "name": "VIALE BONNET [036]",
-    "code": "606076",
-    "coord": [44.677579, 12.234112]
-  },
-  {
-    "name": "VIALE BONNET [036]",
-    "code": "606076",
-    "coord": [44.677579, 12.234112]
-  },
-  {
-    "name": "PORTO GARIBALDI VIA DEI M",
-    "code": "606077",
-    "coord": [44.678893, 12.24144]
   },
   {
     "name": "PORTO GARIBALDI VIA DEI M",
@@ -109,71 +69,7 @@
     "code": "606122",
     "coord": [44.677313, 12.229202]
   },
-  {
-    "name": "VIA RIMEMBRANZE [030]",
-    "code": "606073",
-    "coord": [44.676886, 12.230314]
-  },
-  {
-    "name": "VIA RIMEMBRANZE [030]",
-    "code": "606074",
-    "coord": [44.67646, 12.230101]
-  },
-  {
-    "name": "VIA RIMEMBRANZE [030]",
-    "code": "606074",
-    "coord": [44.67646, 12.230101]
-  },
-  {
-    "name": "VIALE BONNET - BANCA [036",
-    "code": "606075",
-    "coord": [44.677794, 12.236382]
-  },
-  {
-    "name": "VIALE BONNET [036]",
-    "code": "606076",
-    "coord": [44.677579, 12.234112]
-  },
-  {
-    "name": "PORTO GARIBALDI VIA DEI M",
-    "code": "606078",
-    "coord": [44.678636, 12.2413]
-  },
-  {
-    "name": "PORTO GARIBALDI VIA DEI M",
-    "code": "606078",
-    "coord": [44.678636, 12.2413]
-  },
-  {
-    "name": "PORTO GARIBALDI VIA DEI M",
-    "code": "606078",
-    "coord": [44.678636, 12.2413]
-  },
-  {
-    "name": "PORTO GARIBALDI VIA DEI M",
-    "code": "606078",
-    "coord": [44.678636, 12.2413]
-  },
-  {
-    "name": "PERICLE [035]",
-    "code": "606082",
-    "coord": [44.686183, 12.240232]
-  },
-  {
-    "name": "PORTO GARIBALDI PONTE ROM",
-    "code": "606122",
-    "coord": [44.677313, 12.229202]
-  },
-  {
-    "name": "PORTO GARIBALDI PONTE ROM",
-    "code": "606122",
-    "coord": [44.677313, 12.229202]
-  },
-  {
-    "name": "PORTO GARIBALDI PONTE ROM",
-    "code": "606122",
-    "coord": [44.677313, 12.229202]
-  },
+  { "name": "MENTANA [038]", "code": "691038", "coord": [44.680445, 12.23465] },
   {
     "name": "PORTO GARIBALDI VIA DEI M",
     "code": "606160",
@@ -183,66 +79,5 @@
     "name": "MENTANA 131 [037]",
     "code": "691037",
     "coord": [44.680421, 12.231053]
-  },
-  {
-    "name": "BAGNO ASTOR [034]",
-    "code": "606051",
-    "coord": [44.681935, 12.240802]
-  },
-  {
-    "name": "BAGNO ASTOR [034]",
-    "code": "606051",
-    "coord": [44.681935, 12.240802]
-  },
-  {
-    "name": "VIA RIMEMBRANZE [030]",
-    "code": "606073",
-    "coord": [44.676886, 12.230314]
-  },
-  {
-    "name": "VIA RIMEMBRANZE [030]",
-    "code": "606073",
-    "coord": [44.676886, 12.230314]
-  },
-  {
-    "name": "VIA RIMEMBRANZE [030]",
-    "code": "606074",
-    "coord": [44.67646, 12.230101]
-  },
-  {
-    "name": "VIALE BONNET [036]",
-    "code": "606076",
-    "coord": [44.677579, 12.234112]
-  },
-  {
-    "name": "PORTO GARIBALDI VIA DEI M",
-    "code": "606077",
-    "coord": [44.678893, 12.24144]
-  },
-  {
-    "name": "PORTO GARIBALDI VIA DEI M",
-    "code": "606077",
-    "coord": [44.678893, 12.24144]
-  },
-  {
-    "name": "PERICLE [035]",
-    "code": "606082",
-    "coord": [44.686183, 12.240232]
-  },
-  {
-    "name": "PERICLE [035]",
-    "code": "606082",
-    "coord": [44.686183, 12.240232]
-  },
-  {
-    "name": "PORTO GARIBALDI PONTE ROM",
-    "code": "606122",
-    "coord": [44.677313, 12.229202]
-  },
-  {
-    "name": "VIALE BONNET CHIESA [031]",
-    "code": "690031",
-    "coord": [44.677363, 12.232851]
-  },
-  { "name": "MENTANA [038]", "code": "691038", "coord": [44.680445, 12.23465] }
+  }
 ]

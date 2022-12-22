@@ -39,6 +39,7 @@ if (stationsList[1]) {
     console.log(index)
   });
 } else {
+  station = stationsList[0]
   L.marker(station.coord, {
     icon: busStopIcon,
     alt: "Station " + station.name,
