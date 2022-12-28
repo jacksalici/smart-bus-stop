@@ -2,17 +2,17 @@
 
 <h1>{% block title %}{{name}}{% endblock %}</h1>
 {% endblock %} {% block content %}
-<div class="row">
-  <div class="col-3">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Padelloni_sul_molo_-_panoramio.jpg/1200px-Padelloni_sul_molo_-_panoramio.jpg" class="img-fluid rounded-2" alt="...">
+<div class="row h-100">
+  <div class="col-3 overflow-scroll vh-80">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Reno_a_Casalecchio_di_Reno_%28BO%29.jpg/1200px-Reno_a_Casalecchio_di_Reno_%28BO%29.jpg" class="img-fluid rounded-2" alt="...">
 
-    {% for station in stations %}
+    {% for station_code, station in stations.items() %}
   
     <div class="card w-100 my-2">
       <div class="card-body">
         <h5 class="card-title">{{station.name | e}}</h5>
         <h6 class="card-subtitle mb-2 text-muted">{{station.code | e}}</h6>
-        <a href="{{loop.index}}" class="card-link">Stop link</a>
+        <a href="{{station_code}}" class="card-link">Stop link</a>
       </div>
     </div>
 
@@ -21,7 +21,7 @@
 
 
   </div>
-  <div class="col">
+  <div class="col position-sticky">
     <div id="map" style="width: 100%; height: 500px"></div>
 
   </div>

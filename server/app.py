@@ -1,9 +1,18 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, jsonify
 from configparser import ConfigParser
+import requests
 import json
 
 app = Flask(__name__)
 dataset=[]
+
+def getBusRoutes(stop_id):
+    with requests.get(f"https://opendata.comune.bologna.it/api/v2/catalog/datasets/tper-vigente-mattina/records?limit=10&offset=0&refine=stop_id%3A{stop_id}&timezone=Europe%2FBerlin") as res:
+        print(res)
+        if (res.status_code == 200):
+            print(res.text)
+            return json.loads(res.text)
+
 
 
 @app.route("/")
@@ -12,8 +21,10 @@ def home():
 
 @app.route("/<station>")
 def page(station):
-    nametext = "\""+ dataset[int(station)]["name"] + "\"" if dataset[int(station)]["name"] != "" else ""
-    return render_template('station.html', stations=[dataset[int(station)]], name="Bus Stop "+ nametext + " #"+station)
+
+    routes = getBusRoutes(dataset[station])
+    nametext = "\""+ dataset[station]["name"] + "\"" if dataset[station]["name"] != "" else ""
+    return render_template('station.html', stations={station: dataset[station]}, name="Bus Stop "+ nametext + " #"+station)
 
 
 

@@ -1,5 +1,5 @@
 var map = L.map("map", {
-  center: stationsList[0].coord,
+  center: stationsList[Object.keys(stationsList)[0]]["coord"],
   zoom: 12,
 });
 
@@ -27,21 +27,13 @@ var busStopIcon = L.icon({
     "https://img.icons8.com/external-flaticons-flat-flat-icons/64/000000/external-bus-stop-traditional-marketing-flaticons-flat-flat-icons.png",
 });
 
-if (stationsList[1]) {
-  stationsList.forEach((station, index) => {
-    var text = `Bus Stop "${station.name}" - <a href="/${index}">View it</a>`;
-    L.marker(station.coord, {
+Object.keys(stationsList).forEach((station) => {
+    var text = `Bus Stop "${stationsList[station].name}" - <a href="/${station}">View it</a>`;
+    L.marker(stationsList[station].coord, {
       icon: busStopIcon,
-      alt: "Station " + station.name,
+      alt: "Station " + stationsList[station].name,
     })
       .addTo(map)
       .bindPopup(text);
-    console.log(index)
   });
-} else {
-  station = stationsList[0]
-  L.marker(station.coord, {
-    icon: busStopIcon,
-    alt: "Station " + station.name,
-  }).addTo(map);
-}
+
