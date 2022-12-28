@@ -1,83 +1,597 @@
-[
-  {
-    "name": "VIALE BONNET CHIESA [031]",
-    "code": "690031",
-    "coord": [44.677363, 12.232851]
-  },
-  {
-    "name": "UGO BASSI [032]",
-    "code": "690032",
-    "coord": [44.676847, 12.241503]
-  },
-  {
-    "name": "MENTANA 131 [037]",
-    "code": "690037",
-    "coord": [44.680385, 12.231026]
-  },
-  {
-    "name": "MENTANA [038]",
-    "code": "690038",
-    "coord": [44.680445, 12.234638]
-  },
-  {
-    "name": "UGO BASSI [032]",
-    "code": "691032",
-    "coord": [44.67682, 12.241829]
-  },
-  {
-    "name": "BAGNO ASTOR [034]",
-    "code": "606051",
-    "coord": [44.681935, 12.240802]
-  },
-  {
-    "name": "VIA RIMEMBRANZE [030]",
-    "code": "606073",
-    "coord": [44.676886, 12.230314]
-  },
-  {
-    "name": "VIA RIMEMBRANZE [030]",
-    "code": "606074",
-    "coord": [44.67646, 12.230101]
-  },
-  {
-    "name": "VIALE BONNET - BANCA [036",
-    "code": "606075",
-    "coord": [44.677794, 12.236382]
-  },
-  {
-    "name": "VIALE BONNET [036]",
-    "code": "606076",
-    "coord": [44.677579, 12.234112]
-  },
-  {
-    "name": "PORTO GARIBALDI VIA DEI M",
-    "code": "606077",
-    "coord": [44.678893, 12.24144]
-  },
-  {
-    "name": "PORTO GARIBALDI VIA DEI M",
-    "code": "606078",
-    "coord": [44.678636, 12.2413]
-  },
-  {
-    "name": "PERICLE [035]",
-    "code": "606082",
-    "coord": [44.686183, 12.240232]
-  },
-  {
-    "name": "PORTO GARIBALDI PONTE ROM",
-    "code": "606122",
-    "coord": [44.677313, 12.229202]
-  },
-  { "name": "MENTANA [038]", "code": "691038", "coord": [44.680445, 12.23465] },
-  {
-    "name": "PORTO GARIBALDI VIA DEI M",
-    "code": "606160",
-    "coord": [44.678604, 12.241159]
-  },
-  {
-    "name": "MENTANA 131 [037]",
-    "code": "691037",
-    "coord": [44.680421, 12.231053]
-  }
-]
+{
+    "61503": {
+        "name": "MERIDIANA IST.SALVEMINI",
+        "coord": [
+            44.484286,
+            11.268094
+        ]
+    },
+    "61509": {
+        "name": "Z.I. CASAL. PARINI",
+        "coord": [
+            44.48808,
+            11.261538
+        ]
+    },
+    "61510": {
+        "name": "Z.I. CASAL. PARINI",
+        "coord": [
+            44.487938,
+            11.261922
+        ]
+    },
+    "61513": {
+        "name": "Z.I. CASAL. BIZZARRI",
+        "coord": [
+            44.488992,
+            11.257335
+        ]
+    },
+    "61514": {
+        "name": "Z.I. CASAL. BIZZARRI",
+        "coord": [
+            44.489002,
+            11.256807
+        ]
+    },
+    "61517": {
+        "name": "Z.I. CASAL. CADUTI R.E.",
+        "coord": [
+            44.490238,
+            11.252101
+        ]
+    },
+    "61523": {
+        "name": "CASALECCHIO DE CURTIS",
+        "coord": [
+            44.48598,
+            11.251207
+        ]
+    },
+    "70001": {
+        "name": "CASALECCHIO AUTOSTRADA",
+        "coord": [
+            44.471783,
+            11.272085
+        ]
+    },
+    "70002": {
+        "name": "CASALECCHIO AUTOSTRADA",
+        "coord": [
+            44.472391,
+            11.27231
+        ]
+    },
+    "70005": {
+        "name": "CASALECCHIO CIMABUE",
+        "coord": [
+            44.466291,
+            11.269421
+        ]
+    },
+    "70006": {
+        "name": "CASALECCHIO CIMABUE",
+        "coord": [
+            44.467853,
+            11.270525
+        ]
+    },
+    "70008": {
+        "name": "CASALECCHIO DUSE",
+        "coord": [
+            44.461109,
+            11.271935
+        ]
+    },
+    "70009": {
+        "name": "SAN BIAGIO FIORINA",
+        "coord": [
+            44.460709,
+            11.270348
+        ]
+    },
+    "70010": {
+        "name": "SAN BIAGIO FIORINA",
+        "coord": [
+            44.460679,
+            11.270498
+        ]
+    },
+    "70013": {
+        "name": "SAN BIAGIO",
+        "coord": [
+            44.455385,
+            11.270041
+        ]
+    },
+    "70014": {
+        "name": "SAN BIAGIO",
+        "coord": [
+            44.455041,
+            11.270593
+        ]
+    },
+    "72401": {
+        "name": "CASALECCHIO LIDO",
+        "coord": [
+            44.469037,
+            11.277548
+        ]
+    },
+    "72405": {
+        "name": "CASALECCHIO RONZANI",
+        "coord": [
+            44.46495,
+            11.277967
+        ]
+    },
+    "72406": {
+        "name": "CASALECCHIO RONZANI",
+        "coord": [
+            44.465371,
+            11.278059
+        ]
+    },
+    "72413": {
+        "name": "SAN BIAGIO MICCA",
+        "coord": [
+            44.457303,
+            11.27498
+        ]
+    },
+    "72417": {
+        "name": "SAN BIAGIO CEFALONIA",
+        "coord": [
+            44.45582,
+            11.274432
+        ]
+    },
+    "72418": {
+        "name": "SAN BIAGIO CEFALONIA",
+        "coord": [
+            44.455267,
+            11.274184
+        ]
+    },
+    "72421": {
+        "name": "SAN BIAGIO RESISTENZA",
+        "coord": [
+            44.455322,
+            11.271384
+        ]
+    },
+    "6247": {
+        "name": "CASALECCHIO BRIGATA BOLER",
+        "coord": [
+            44.490264,
+            11.276677
+        ]
+    },
+    "6248": {
+        "name": "CASALECCHIO SAFFI",
+        "coord": [
+            44.482564,
+            11.279999
+        ]
+    },
+    "6249": {
+        "name": "CASALECCHIO ISONZO",
+        "coord": [
+            44.484985,
+            11.278684
+        ]
+    },
+    "6250": {
+        "name": "CASALECCHIO ISONZO",
+        "coord": [
+            44.485092,
+            11.278701
+        ]
+    },
+    "6252": {
+        "name": "CASALECCHIO TRIPOLI",
+        "coord": [
+            44.484522,
+            11.281106
+        ]
+    },
+    "6253": {
+        "name": "CASALECCHIO SAFFI",
+        "coord": [
+            44.482576,
+            11.279848
+        ]
+    },
+    "6254": {
+        "name": "CASALECCHIO GARIBALDI",
+        "coord": [
+            44.4814,
+            11.279199
+        ]
+    },
+    "6255": {
+        "name": "CASALECCHIO GARIBALDI",
+        "coord": [
+            44.48102,
+            11.278844
+        ]
+    },
+    "6257": {
+        "name": "CASALECCHIO BIXIO",
+        "coord": [
+            44.478927,
+            11.277732
+        ]
+    },
+    "6259": {
+        "name": "CASALECCHIO MANZONI",
+        "coord": [
+            44.47475,
+            11.271371
+        ]
+    },
+    "6263": {
+        "name": "STAZIONE CASALECCHIO GARI",
+        "coord": [
+            44.483033,
+            11.273641
+        ]
+    },
+    "6264": {
+        "name": "STAZIONE CASALECCHIO GARI",
+        "coord": [
+            44.48313,
+            11.273708
+        ]
+    },
+    "6265": {
+        "name": "STAZIONE CASALECCHIO GARI",
+        "coord": [
+            44.482318,
+            11.273802
+        ]
+    },
+    "6267": {
+        "name": "MERIDIANA CRISTONI",
+        "coord": [
+            44.482952,
+            11.271375
+        ]
+    },
+    "6601": {
+        "name": "CASALECCHIO SANTA LUCIA",
+        "coord": [
+            44.479819,
+            11.268663
+        ]
+    },
+    "6602": {
+        "name": "CASALECCHIO SANTA LUCIA",
+        "coord": [
+            44.479702,
+            11.268633
+        ]
+    },
+    "6603": {
+        "name": "CASALECCHIO SANTA LUCIA",
+        "coord": [
+            44.479796,
+            11.268435
+        ]
+    },
+    "6831": {
+        "name": "CERETOLO MOLINO",
+        "coord": [
+            44.480494,
+            11.265947
+        ]
+    },
+    "6832": {
+        "name": "CERETOLO MOLINO",
+        "coord": [
+            44.48036,
+            11.265879
+        ]
+    },
+    "7031": {
+        "name": "CASALECCHIO CASA CONOSCEN",
+        "coord": [
+            44.478341,
+            11.276879
+        ]
+    },
+    "7040": {
+        "name": "CASALECCHIO STAZIONE",
+        "coord": [
+            44.474692,
+            11.275228
+        ]
+    },
+    "7043": {
+        "name": "CASALECCHIO STAZIONE",
+        "coord": [
+            44.474618,
+            11.276219
+        ]
+    },
+    "7046": {
+        "name": "CASALECCHIO MARCONI",
+        "coord": [
+            44.477129,
+            11.277599
+        ]
+    },
+    "7048": {
+        "name": "CASALECCHIO STAZIONE",
+        "coord": [
+            44.47505,
+            11.276235
+        ]
+    },
+    "7502": {
+        "name": "CASALECCHIO CASA CONOSCEN",
+        "coord": [
+            44.478178,
+            11.27647
+        ]
+    },
+    "7503": {
+        "name": "CASALECCHIO CROCE ROSSA",
+        "coord": [
+            44.475361,
+            11.271885
+        ]
+    },
+    "7504": {
+        "name": "CASALECCHIO CROCE ROSSA",
+        "coord": [
+            44.476704,
+            11.270918
+        ]
+    },
+    "7505": {
+        "name": "CASALECCHIO PARCO RODARI",
+        "coord": [
+            44.478036,
+            11.270027
+        ]
+    },
+    "7506": {
+        "name": "CASALECCHIO PARCO RODARI",
+        "coord": [
+            44.478566,
+            11.270513
+        ]
+    },
+    "60509": {
+        "name": "CERETOLO TENUTA LAURO",
+        "coord": [
+            44.482019,
+            11.24937
+        ]
+    },
+    "60510": {
+        "name": "CERETOLO TENUTA LAURO",
+        "coord": [
+            44.48122,
+            11.250647
+        ]
+    },
+    "60511": {
+        "name": "CERETOLO VIVALDI",
+        "coord": [
+            44.483877,
+            11.245983
+        ]
+    },
+    "60512": {
+        "name": "CERETOLO VIVALDI",
+        "coord": [
+            44.483442,
+            11.246143
+        ]
+    },
+    "61504": {
+        "name": "MERIDIANA IST.SALVEMINI",
+        "coord": [
+            44.484389,
+            11.267909
+        ]
+    },
+    "61506": {
+        "name": "CERETOLO LAVORO",
+        "coord": [
+            44.483842,
+            11.263273
+        ]
+    },
+    "61521": {
+        "name": "Z.I. CASAL. DUE GIUGNO 19",
+        "coord": [
+            44.491253,
+            11.249964
+        ]
+    },
+    "61522": {
+        "name": "Z.I. CASAL. DUE GIUGNO 19",
+        "coord": [
+            44.491452,
+            11.249431
+        ]
+    },
+    "70007": {
+        "name": "CASALECCHIO DUSE",
+        "coord": [
+            44.461019,
+            11.271957
+        ]
+    },
+    "70011": {
+        "name": "CASALECCHIO AUSL",
+        "coord": [
+            44.460165,
+            11.273256
+        ]
+    },
+    "72414": {
+        "name": "SAN BIAGIO MICCA",
+        "coord": [
+            44.457161,
+            11.274447
+        ]
+    },
+    "6240": {
+        "name": "CASALECCHIO CIMITERO",
+        "coord": [
+            44.482984,
+            11.276079
+        ]
+    },
+    "6245": {
+        "name": "CASALECCHIO CIMITERO",
+        "coord": [
+            44.482965,
+            11.276128
+        ]
+    },
+    "6246": {
+        "name": "CASALECCHIO BRIGATA BOLER",
+        "coord": [
+            44.490296,
+            11.276892
+        ]
+    },
+    "6251": {
+        "name": "CASALECCHIO TRIPOLI",
+        "coord": [
+            44.484414,
+            11.281102
+        ]
+    },
+    "6258": {
+        "name": "CASALECCHIO BIXIO",
+        "coord": [
+            44.478638,
+            11.277771
+        ]
+    },
+    "6260": {
+        "name": "CASALECCHIO RESPIGHI",
+        "coord": [
+            44.478621,
+            11.267774
+        ]
+    },
+    "6269": {
+        "name": "CASALECCHIO NENNI",
+        "coord": [
+            44.480286,
+            11.270076
+        ]
+    },
+    "7023": {
+        "name": "CASALECCHIO DANTE",
+        "coord": [
+            44.473073,
+            11.273317
+        ]
+    },
+    "7032": {
+        "name": "CASALECCHIO DANTE",
+        "coord": [
+            44.472696,
+            11.273265
+        ]
+    },
+    "6262": {
+        "name": "CASALECCHIO MARULLINA",
+        "coord": [
+            44.476885,
+            11.26953
+        ]
+    },
+    "6266": {
+        "name": "CASALECCHIO PIAVE",
+        "coord": [
+            44.48008,
+            11.275425
+        ]
+    },
+    "7039": {
+        "name": "CASALECCHIO STAZIONE",
+        "coord": [
+            44.475445,
+            11.275811
+        ]
+    },
+    "61505": {
+        "name": "CERETOLO LAVORO",
+        "coord": [
+            44.483962,
+            11.263554
+        ]
+    },
+    "61507": {
+        "name": "CASALECCHIO MORO",
+        "coord": [
+            44.484091,
+            11.265207
+        ]
+    },
+    "61508": {
+        "name": "CASALECCHIO MORO",
+        "coord": [
+            44.484454,
+            11.26463
+        ]
+    },
+    "61518": {
+        "name": "Z.I. CASAL. CADUTI R.E.",
+        "coord": [
+            44.490113,
+            11.252058
+        ]
+    },
+    "61519": {
+        "name": "CASALECCHIO PALASPORT",
+        "coord": [
+            44.48591,
+            11.249255
+        ]
+    },
+    "61524": {
+        "name": "CASALECCHIO DE CURTIS",
+        "coord": [
+            44.486049,
+            11.251374
+        ]
+    },
+    "61570": {
+        "name": "CASALECCHIO PALASPORT",
+        "coord": [
+            44.486733,
+            11.248621
+        ]
+    },
+    "72402": {
+        "name": "CASALECCHIO LIDO",
+        "coord": [
+            44.470388,
+            11.277487
+        ]
+    },
+    "72409": {
+        "name": "CASALECCHIO C.S. ALLENDE",
+        "coord": [
+            44.461419,
+            11.278974
+        ]
+    },
+    "72410": {
+        "name": "CASALECCHIO C.S. ALLENDE",
+        "coord": [
+            44.461581,
+            11.278968
+        ]
+    }
+}

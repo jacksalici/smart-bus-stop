@@ -8,12 +8,12 @@ with requests.get(CSV_URL, stream=True) as r:
      buff = io.StringIO(r.text)
      obj = csv.DictReader(buff,delimiter=";")
      newobj = []
-     for station in obj:
+     for index, station in enumerate(obj):
           if station["Comune"].upper()=="MODENA" and station["Nome"]!="" :
-               newobj.append({
+               newobj[index] = {
                     'name': station["Nome"].title(),
                     'coord': [float(station["Latitudine"]), float(station["Longitudine"])],
-               })
+               }
      
      with open("modenaBusStationDataset.json", "w") as fd:
          json.dump(newobj, fd, indent=4) 
