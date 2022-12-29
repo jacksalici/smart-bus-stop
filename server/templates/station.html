@@ -5,10 +5,36 @@
 
 <div id="map" style="width: 100%; height: 500px"></div>
 
+<div class="container">
+  <div class="row row-cols-auto" id="lines">
+    {%for record in routes%}
+    <div class="col m-3 p-1">
+      <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Route id {{record.route_id}}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">Expected departure Time {{record.departure_time}}</h6>       
+      </div>
+      </div>
+      </div>
+
+    {%endfor%}
+
+
+
+  </div>
+</div>
+
 <script>
-  const stationsList = {{ stations | safe}}
+  const stationsList = {{ stations | safe}};
 </script>
 
 <script type="text/javascript"
-src="{{ url_for('static', filename='main.js') }}"></script>
+src="{{ url_for('static', filename='main.js') }}">
+</script>
+
+<script>
+  displayMap()
+</script>
+
+
 {% endblock %}

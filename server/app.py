@@ -8,10 +8,10 @@ dataset=[]
 
 def getBusRoutes(stop_id):
     with requests.get(f"https://opendata.comune.bologna.it/api/v2/catalog/datasets/tper-vigente-mattina/records?limit=10&offset=0&refine=stop_id%3A{stop_id}&timezone=Europe%2FBerlin") as res:
-        print(res)
         if (res.status_code == 200):
-            print(res.text)
-            return json.loads(res.text)
+            routes = [elem["record"]["fields"] for elem in res.json()["records"] ]
+            print(routes)
+            return routes
 
 
 
@@ -22,9 +22,8 @@ def home():
 @app.route("/<station>")
 def page(station):
 
-    routes = getBusRoutes(dataset[station])
     nametext = "\""+ dataset[station]["name"] + "\"" if dataset[station]["name"] != "" else ""
-    return render_template('station.html', stations={station: dataset[station]}, name="Bus Stop "+ nametext + " #"+station)
+    return render_template('station.html', routes = getBusRoutes(station), stations={station: dataset[station]}, name="Bus Stop "+ nametext + " #"+station)
 
 
 
