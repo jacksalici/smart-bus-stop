@@ -1,7 +1,7 @@
 function displayMap() {
   var map = L.map("map", {
     center: stationsList[Object.keys(stationsList)[0]]["coord"],
-    zoom: 12,
+    zoom: 14,
   });
 
   const key = "zeNHm3ioxQhNUuX6E3yj";

@@ -7,7 +7,7 @@ app = Flask(__name__)
 dataset=[]
 
 def getBusRoutes(stop_id):
-    with requests.get(f"https://opendata.comune.bologna.it/api/v2/catalog/datasets/tper-vigente-mattina/records?limit=10&offset=0&refine=stop_id%3A{stop_id}&timezone=Europe%2FBerlin") as res:
+    with requests.get(f"https://opendata.comune.bologna.it/api/v2/catalog/datasets/tper-vigente-mattina/records?limit=100&offset=0&refine=stop_id%3A{stop_id}&timezone=Europe%2FBerlin") as res:
         if (res.status_code == 200):
             routes = [elem["record"]["fields"] for elem in res.json()["records"] ]
             print(routes)

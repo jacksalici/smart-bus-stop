@@ -1,31 +1,25 @@
-{% extends 'baseof.html' %} {% block header %}
+{% extends 'baseof.html' %} 
+{% block titlepage %}Smart stop map{% endblock %}
 
-<h1>{% block title %}{{name}}{% endblock %}</h1>
-{% endblock %} {% block content %}
-<div class="row h-100">
-  <div class="col-3 overflow-scroll vh-80">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Reno_a_Casalecchio_di_Reno_%28BO%29.jpg/1200px-Reno_a_Casalecchio_di_Reno_%28BO%29.jpg" class="img-fluid rounded-2" alt="...">
+{% block title %}{{name}}{% endblock %}
+{% block content %}
 
-    {% for station_code, station in stations.items() %}
-  
-    <div class="card w-100 my-2">
-      <div class="card-body">
-        <h5 class="card-title">{{station.name | e}}</h5>
-        <h6 class="card-subtitle mb-2 text-muted">{{station_code | e}}</h6>
-        <a href="{{station_code}}" class="card-link">Stop link</a>
-      </div>
-    </div>
+<div id="map" style="width: 100%; height: 500px"></div>
 
-    {% endfor %}
-
-
-
-  </div>
-  <div class="col position-sticky">
-    <div id="map" style="width: 100%; height: 500px"></div>
-
-  </div>
-
+<div class="row row-cols-2 row-cols-md-5 g-3 mt-3">
+      {% for station_code, station in stations.items() %}
+         <div class="col">
+          <div class="card bg-light">
+            <div class="card-body">
+              <h5 class="card-title">{{station.name | e}}</h5>
+              <h6 class="card-subtitle text-muted">{{station_code | e}}</h6>
+              <a href="{{station_code}}" class="card-link">Stop link</a>
+            </div>
+              </div>
+         </div>
+        {% endfor %}
+    
+</div> 
 
 <script>
   const stationsList = {{ stations | safe}}
