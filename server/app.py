@@ -29,18 +29,14 @@ bcrypt = Bcrypt()
 def create_app():   
     app = Flask(__name__)
 
-    app.secret_key = 'secret-key'
-    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///database.db"
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
     
-    """
     with open("./config.ini", "r") as file:
         config = ConfigParser()
         config.read_file(file)
         flask_config = dict(config.items("flask"))
         for cfg_key in flask_config:
             app.config[cfg_key.upper()] = flask_config[cfg_key]
-    """
+    
 
     login_manager.init_app(app)
     db.init_app(app)
