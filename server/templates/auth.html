@@ -20,48 +20,41 @@
                 {% endwith %}
 
                 <div class="text-center">
-                    <h2>User Authentication in Flask</h2>
+                    <h2>User Authentication</h2>
                     <h5 class="text-primary">{{ text }}</h5>
                 </div>
                 
                 {% if request.path == '/register/' %}
                 <div class="form-group mb-3">
-                    {{ form.username(class_="form-control",placeholder="Username")}}
+                    {{ form.name(class_="form-control",placeholder="Full Name")}}
                 </div>
-                {% for error in form.username.errors %}
+                {% for error in form.name.errors %}
                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
                     {{ error }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
                 {% endfor%}
                 {% endif%}
+                
                 <div class="form-group mb-3">
-                    {{ form.email(class_="form-control",placeholder="Email")}}
+                    {{ form.id(class_="form-control",placeholder="ID")}}
                 </div>
-                {% for error in form.email.errors %}
-                <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                    {{ error }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                {% endfor%}
-                <div class="form-group mb-3">
-                    {{ form.pwd(class_="form-control",placeholder="Password")}}
-                </div>
-                {% for error in form.pwd.errors %}
+                {% for error in form.id.errors %}
                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
                     {{ error }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div> {% endfor%}
-                {% if request.path == '/register/' %}
+
+
                 <div class="form-group mb-3">
-                    {{ form.cpwd(class_="form-control",placeholder="Confirm Password")}}
+                    {{ form.key(class_="form-control",placeholder="Key")}}
                 </div>
-                {% for error in form.cpwd.errors %}
+                {% for error in form.key.errors %}
                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
                     {{ error }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div> {% endfor%}
-                {% endif %}
+                
                 <div class="text-center">
 
                     <div class="d-grid gap-2">

@@ -37,7 +37,7 @@ import requests, json
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
+    return User.query.get(user_id)
 
 app = create_app()
 dataset=[]
@@ -75,12 +75,12 @@ def login():
 
     if form.validate_on_submit():
         try:
-            user = User.query.filter_by(email=form.email.data).first()
-            if check_password_hash(user.pwd, form.pwd.data):
+            user = User.query.filter_by(id=form.id.data).first()
+            if check_password_hash(user.ukey, form.key.data):
                 login_user(user)
-                return redirect(url_for('index'))
+                return redirect(url_for('home'))
             else:
-                flash("Invalid Username or password!", "danger")
+                flash("Invalid id or key!", "danger")
         except Exception as e:
             flash(e, "danger")
 
@@ -97,14 +97,14 @@ def register():
     form = register_form()
     if form.validate_on_submit():
         try:
-            email = form.email.data
-            pwd = form.pwd.data
-            username = form.username.data
+            id = form.id.data
+            key = form.key.data
+            name = form.name.data
             
             newuser = User(
-                username=username,
-                email=email,
-                pwd=bcrypt.generate_password_hash(pwd),
+                id=id,
+                name=name,
+                ukey=bcrypt.generate_password_hash(key),
             )
     
             db.session.add(newuser)
