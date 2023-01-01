@@ -21,8 +21,10 @@
       href="{{ url_for('static',filename='/style.css') }}"
       crossorigin=""
     />
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-
+    <link
+      rel="shortcut icon"
+      href="{{ url_for('static', filename='favicon.ico') }}"
+    />
 
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
@@ -43,7 +45,20 @@
         <!--NAVBAR-->
         <nav class="navbar navbar-expand-lg bg-light">
           <div class="container-fluid">
-            <a class="navbar-brand" href="/">{% block titlepage %}{% endblock %} 🚏</a>
+            <a class="navbar-brand" href="/"
+              >{% block titlepage %}{% endblock %} 🚏</a
+            >
+
+            <span class="navbar-text">
+              {% if current_user.is_authenticated %} Welcome {{
+              current_user.name }}. <a href="{{url_for('logout')}}">Logout</a>
+
+              {% else %} Welcome anonymous user.
+              <a href="{{url_for('login')}}">Sign in</a>
+
+              {% endif %}
+            </span>
+
             <!--<button
               class="navbar-toggler"
               type="button"
@@ -71,11 +86,7 @@
         </nav>
 
         <div class="container mt-4">{% block header %} {% endblock %}</div>
-
-     
       </header>
-
-      
 
       <div class="container-fluid mt-4">{% block content %} {% endblock %}</div>
     </section>
