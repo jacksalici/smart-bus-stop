@@ -7,18 +7,18 @@
 <div id="map" style="width: 100%; height: 500px"></div>
 
 <div class="row row-cols-2 row-cols-md-5 g-3 mt-3">
-      {% for station_code, station in stations.items() %}
-         <div class="col">
-          <div class="card bg-light">
-            <div class="card-body">
-              <h5 class="card-title">{{station.name | e}}</h5>
-              <h6 class="card-subtitle text-muted">{{station_code | e}}</h6>
-              <a href="{{station_code}}" class="card-link">Stop link</a>
-            </div>
-              </div>
-         </div>
-        {% endfor %}
-    
+  {% for station_code, station in stations.items() %}
+  <div class="col">
+   <div class="card bg-light">
+     <div class="card-body">
+       <h5 class="card-title">{{station.name | e}}</h5>
+       <h6 class="card-subtitle text-muted">{{station_code | e}}</h6>
+       <a href="{{station_code}}" class="card-link">Stop link</a>
+     </div>
+       </div>
+  </div>
+{% endfor %}
+
 </div> 
 
 <script>
