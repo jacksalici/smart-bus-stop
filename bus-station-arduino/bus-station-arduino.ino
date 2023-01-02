@@ -28,17 +28,12 @@ void loop() {
  
   MFRC522::PICC_Type piccType = rfid.PICC_GetType(rfid.uid.sak);
  
-  Serial.print(F("RFID Tag UID:"));
   printHex(rfid.uid.uidByte, rfid.uid.size);
-  Serial.println("");
  
   rfid.PICC_HaltA(); // Halt PICC
 }
  
 //Routine to dump a byte array as hex values to Serial. 
 void printHex(byte *buffer, byte bufferSize) {
-  for (byte i = 0; i < bufferSize; i++) {
-    Serial.print(buffer[i] < 0x10 ? " 0" : " ");
-    Serial.print(buffer[i], HEX);
-  }
+  Serial.write(buffer, bufferSize);
 }

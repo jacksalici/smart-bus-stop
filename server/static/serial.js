@@ -31,30 +31,35 @@ if ("serial" in navigator) {
   );
 }
 
-let lineBuffer = "";
-let latestValue = 0;
-
 async function getReader() {
   port = await navigator.serial.requestPort({});
-  var speed = 9600;
-  await port.open({ baudRate: [speed] });
 
   connectButton.innerText = "Disconnect";
   console.log("Connected using Web Serial API");
+  const bufferSize = 1;
+  let buffer = new ArrayBuffer(bufferSize);
 
-  const textDecoder = new TextDecoderStream();
-  const readableStreamClosed = port.readable.pipeTo(textDecoder.writable);
-  const reader = textDecoder.readable.getReader();
+  let string = ""
 
-  // Listen to data coming from the serial device.
+  // Set `bufferSize` on open() to at least the size of the buffer.
+  await port.open({ baudRate: 9600, bufferSize });
+
+  const reader = port.readable.getReader({ mode: "byob" });
   while (true) {
-    const { value, done } = await reader.read();
+    const { value, done } = await reader.read(new Uint8Array(buffer));
     if (done) {
-      // Allow the serial port to be closed later.
-      reader.releaseLock();
       break;
     }
-    // value is a string.
-    console.log(value);
+    buffer = value.buffer;
+    console.log(value)
+    // Handle `value`.
+    string += buf2hex(buffer);
+    console.log(string)
   }
 }
+
+function buf2hex(buffer) { // buffer is an ArrayBuffer
+    return [...new Uint8Array(buffer)]
+        .map(x => x.toString(16).padStart(2, '0'))
+        .join('');
+  }
