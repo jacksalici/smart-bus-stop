@@ -33,17 +33,19 @@ title %}{{name}}{% endblock %} {% block content %}
       </button>
 
       {% endif %}
-      <button
-        class="btn btn-warning"
-        type="button"
-        id="SerialConnectButton"
-      > Serial Connect </button>
+      
     </div>
   </div>
   <div class="col">
     <div id="map" style="width: 100%; height: 500px"></div>
   </div>
 </div>
+
+<button
+        class="btn link-light"
+        type="button"
+        id="SerialConnectButton"
+      > Serial Connect </button>
 
 <div class="container-fluid mt-2 p-3 rounded-3 bg-light">
   <h2 class="m-2">Prossime linee:</h2>
@@ -138,7 +140,7 @@ title %}{{name}}{% endblock %} {% block content %}
           </div>
 
           <div class="form-group mb-3">
-            {{ form.id(class_="form-control",placeholder="ID")}}
+            {{ form.id(id="login_form_id", class_="form-control",placeholder="ID")}}
           </div>
           {% for error in form.id.errors %}
           <div
@@ -156,7 +158,7 @@ title %}{{name}}{% endblock %} {% block content %}
           {% endfor%}
 
           <div class="form-group mb-3">
-            {{ form.key(class_="form-control",placeholder="Key")}}
+            {{ form.key(id="login_form_key", class_="form-control",placeholder="Key")}}
           </div>
           {% for error in form.key.errors %}
           <div
@@ -170,6 +172,7 @@ title %}{{name}}{% endblock %} {% block content %}
               data-bs-dismiss="alert"
               aria-label="Close"
             ></button>
+
           </div>
           {% endfor%}
 
@@ -180,6 +183,13 @@ title %}{{name}}{% endblock %} {% block content %}
               data-bs-dismiss="modal"
             >
               Annulla
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              id="readtag"
+            >
+              Leggi tag
             </button>
             <button type="submit" class="btn btn-block btn-success">
               {{ btn_action }}
