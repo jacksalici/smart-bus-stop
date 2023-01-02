@@ -4,7 +4,8 @@ from flask import (
     redirect,
     flash,
     url_for,
-    session
+    session,
+    request
 )
 
 from datetime import timedelta
@@ -53,7 +54,6 @@ def getBusRoutes(stop_id):
     with requests.get(f"https://opendata.comune.bologna.it/api/v2/catalog/datasets/tper-vigente-mattina/records?limit=100&offset=0&refine=stop_id%3A{stop_id}&timezone=Europe%2FBerlin") as res:
         if (res.status_code == 200):
             routes = [elem["record"]["fields"] for elem in res.json()["records"] ]
-            print(routes)
             return routes
 
 
@@ -62,11 +62,30 @@ def getBusRoutes(stop_id):
 def home():
     return render_template('index.html', stations=dataset, name = "Bus Stops Map")
 
-@app.route("/<station>")
+@app.route("/<station>", methods=("GET", "POST"), strict_slashes=False)
 def page(station):
 
+    form = login_form()
+
+    if form.validate_on_submit():
+        try:
+            user = User.query.filter_by(id=form.id.data).first()
+            if check_password_hash(user.ukey, form.key.data):
+                login_user(user)
+                return redirect(url_for('page', station))
+            else:
+                flash("Invalid id or key!", "danger")
+        except Exception as e:
+            flash(e, "danger")
+
     nametext = "\""+ dataset[station]["name"] + "\"" if dataset[station]["name"] != "" else ""
-    return render_template('station.html', routes = getBusRoutes(station), stations={station: dataset[station]}, name="Bus Stop "+ nametext + " #"+station)
+    return render_template('station.html', 
+        routes = getBusRoutes(station), 
+        stations={station: dataset[station]}, 
+        name="Bus Stop "+ nametext + " #"+station,  
+        form=form,
+        text="Login",
+        btn_action="Login")
 
 
 @app.route("/login/", methods=("GET", "POST"), strict_slashes=False)
@@ -141,7 +160,7 @@ def register():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('login'))
+    return redirect(request.referrer)
 
 with open("./busStopDataset.json", "r") as file:
         dataset=json.load(file)

@@ -1,9 +1,5 @@
-{% extends 'baseof.html' %} 
-{% block titlepage %}{{name}}{% endblock %}
-{% block title %}{{name}}{% endblock %}
- {% block content %}
-
-
+{% extends 'baseof.html' %} {% block titlepage %}{{name}}{% endblock %} {% block
+title %}{{name}}{% endblock %} {% block content %}
 
 <div class="row">
   <div class="col">
@@ -11,7 +7,6 @@
       <h4>Next bus:</h4>
       <h2>7 min</h2>
       <p>See its live location on the map.</p>
-
     </div>
   </div>
   <div class="col">
@@ -19,55 +14,131 @@
   </div>
 </div>
 
+<div class="container-fluid mt-2 p-3 rounded-3 bg-light">
+  {% if current_user.is_authenticated %}
+
+  <button class="btn btn-primary" type="submit">Compra un biglietto. </button>
+  {% else %}
+
+  <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#login">Esegui l'accesso per prenotare un posto. </button>
+
+
+  {% endif %}
+</div>
 
 <div class="container-fluid mt-2 p-3 rounded-3 bg-light">
   <h2 class="m-2">Next Lines:</h2>
   <select class="form-select m-2" aria-label="Disabled select example" disabled>
-        <option selected>Select route (not avaible)</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
+    <option selected>Select route (not avaible)</option>
+    <option value="1">One</option>
+    <option value="2">Two</option>
+    <option value="3">Three</option>
   </select>
   <select class="form-select m-2" aria-label="Disabled select example" disabled>
     <option selected>Mattina</option>
     <option value="1">One</option>
     <option value="2">Two</option>
     <option value="3">Three</option>
-</select>
-  <select class="form-select m-2" aria-label="Disabled select example" disabled>
-        <option selected>Select day (not avaible)</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
   </select>
-  
+  <select class="form-select m-2" aria-label="Disabled select example" disabled>
+    <option selected>Select day (not avaible)</option>
+    <option value="1">One</option>
+    <option value="2">Two</option>
+    <option value="3">Three</option>
+  </select>
+
   <div class="row row-cols-auto" id="lines">
     {%for record in routes%}
     <div class="col m-3 p-1">
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">Route id {{record.route_id}}</h5>
-          <h6 class="card-subtitle mb-2 text-muted">Expected departure Time {{record.departure_time}}</h6>       
-          <p class="cart-text">Direction: {{record.direction_id}}, day: {{record.giorno}}</p>
+          <h6 class="card-subtitle mb-2 text-muted">
+            Expected departure Time {{record.departure_time}}
+          </h6>
+          <p class="cart-text">
+            Direction: {{record.direction_id}}, day: {{record.giorno}}
+          </p>
         </div>
-      </div>  
+      </div>
     </div>
     {%endfor%}
   </div>
 </div>
 
 
+
+<!-- Modal -->
+<div class="modal fade" id="login" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="{{ request.path }}" method="POST" class="card-body">
+          {{ form.csrf_token }}
+
+          {% with messages = get_flashed_messages(with_categories=true) %}
+          <!-- Categories: success (green), info (blue), warning (yellow), danger (red) -->
+          {% if messages %}
+          {% for category, message in messages %}
+          <div class="alert alert-{{category}} alert-dismissible fade show" role="alert">
+              {{ message }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          {% endfor %}
+          {% endif %}
+          {% endwith %}
+
+          <div class="text-center">
+              <h2>User Authentication</h2>
+              <h5 class="text-primary">{{ text }}</h5>
+          </div>
+          
+          <div class="form-group mb-3">
+              {{ form.id(class_="form-control",placeholder="ID")}}
+          </div>
+          {% for error in form.id.errors %}
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+              {{ error }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div> {% endfor%}
+
+
+          <div class="form-group mb-3">
+              {{ form.key(class_="form-control",placeholder="Key")}}
+          </div>
+          {% for error in form.key.errors %}
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+              {{ error }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div> {% endfor%}
+          
+          
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-block btn-success"> {{ btn_action }} </button>
+
+      </div>
+    </form>
+
+    </div>
+  </div>
+</div>
+
 <script>
   const stationsList = {{ stations | safe}};
 </script>
 
-<script type="text/javascript"
-src="{{ url_for('static', filename='main.js') }}">
-</script>
+<script
+  type="text/javascript"
+  src="{{ url_for('static', filename='main.js') }}"
+></script>
 
 <script>
-  displayMap()
+  displayMap();
 </script>
-
 
 {% endblock %}
