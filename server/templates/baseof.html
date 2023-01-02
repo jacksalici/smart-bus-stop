@@ -50,11 +50,10 @@
             >
 
             <span class="navbar-text">
-              {% if current_user.is_authenticated %} Welcome {{
-              current_user.name }}. <a href="{{url_for('logout')}}">Logout</a>
+              {% if current_user.is_authenticated %} Benevenuto {{
+              current_user.name }}
 
-              {% else %} Welcome anonymous user.
-              <a href="{{url_for('login')}}">Sign in</a>
+              {% else %} Benvenuto utente anonimo
 
               {% endif %}
             </span>

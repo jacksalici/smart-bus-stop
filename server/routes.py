@@ -82,7 +82,7 @@ def page(station):
     return render_template('station.html', 
         routes = getBusRoutes(station), 
         stations={station: dataset[station]}, 
-        name="Bus Stop "+ nametext + " #"+station,  
+        name="FERMATA "+ nametext + " #"+station,  
         form=form,
         text="Login",
         btn_action="Login")
