@@ -33,6 +33,11 @@ title %}{{name}}{% endblock %} {% block content %}
       </button>
 
       {% endif %}
+      <button
+        class="btn btn-warning"
+        type="button"
+        id="SerialConnectButton"
+      > Serial Connect </button>
     </div>
   </div>
   <div class="col">
@@ -192,6 +197,11 @@ title %}{{name}}{% endblock %} {% block content %}
   <script
     type="text/javascript"
     src="{{ url_for('static', filename='main.js') }}"
+  ></script>
+
+  <script
+    type="text/javascript"
+    src="{{ url_for('static', filename='serial.js') }}"
   ></script>
 
   <script>
