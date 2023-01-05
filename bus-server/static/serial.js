@@ -66,7 +66,8 @@ async function getReader() {
 }
 
 async function readString() {
-    let buffer = new ArrayBuffer(4);
+
+  let buffer = new ArrayBuffer(4);
   // Read the first 512 bytes.
   buffer = await readInto(reader, buffer);
   str = buf2hex(buffer).toUpperCase()
