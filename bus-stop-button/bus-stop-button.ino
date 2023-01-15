@@ -1,12 +1,10 @@
-#include "wificredential.h"
-/*
-## wificredential.h:
-// Change to your WiFi credentials
-const char* ssid     = "...";
-const char* password = "...";
-*/
 
+
+#include <WiFiManager.h>
 #include <WiFi.h>
+
+WiFiManager wifiManager;
+
 
 #define BUTTON_PIN 16 // ESP32 pin GIOP16, which connected to button
 #define LED_PIN 18    // ESP32 pin GIOP18, which connected to led
@@ -22,18 +20,11 @@ void setup()
     delay(1000);
 
     WiFi.mode(WIFI_STA); // Optional
-    WiFi.begin(ssid, password);
-    Serial.println("\nConnecting");
 
-    while (WiFi.status() != WL_CONNECTED)
-    {
-        Serial.print(".");
-        delay(100);
-    }
+    
 
-    Serial.println("\nConnected to the WiFi network");
-    Serial.print("Local ESP32 IP: ");
-    Serial.println(WiFi.localIP());
+    wifiManager.autoConnect("bus-stop-esp");
+
 
     pinMode(BUTTON_PIN, INPUT_PULLUP); // set ESP32 pin to input pull-up mode
     pinMode(LED_PIN, OUTPUT);          // set ESP32 pin to output mode
