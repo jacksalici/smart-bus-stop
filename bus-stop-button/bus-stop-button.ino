@@ -13,17 +13,22 @@ WiFiManager wifiManager;
 int led_state = LOW;   // the current state of LED
 int button_state;      // the current state of button
 int last_button_state; // the previous state of button
+const char* mqtt_server = "ciao";
 
 void setup()
 {
     Serial.begin(115200);
     delay(1000);
 
-    WiFi.mode(WIFI_STA); // Optional
 
+
+    WiFiManagerParameter custom_mqtt_server("server", "mqtt server", mqtt_server, 40);
+    wifiManager.addParameter(&custom_mqtt_server);
     
 
-    wifiManager.autoConnect("bus-stop-esp");
+    wifiManager.startConfigPortal("bus-stop-esp");
+
+    mqtt_server = custom_mqtt_server.getValue();
 
 
     pinMode(BUTTON_PIN, INPUT_PULLUP); // set ESP32 pin to input pull-up mode
