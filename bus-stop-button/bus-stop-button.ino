@@ -12,15 +12,19 @@ unsigned long lastMsg = 0;
 
 int currentstateFSM_Led = 0;
 
-#define MSG_BUFFER_SIZE (50)
-char msg[MSG_BUFFER_SIZE];
-
 #define BUTTON_PIN 16 // ESP32 pin GIOP16, which connected to button
 #define LED_PIN 18    // ESP32 pin GIOP18, which connected to led
 
 
-const char *topic_out = "button/01";
-const char *topic_in = "info";
+#define MSG_BUFFER_SIZE (50)
+char msg[MSG_BUFFER_SIZE];
+
+String topic = "hButton/";
+
+
+String stopID = "01";
+/*const char *topic_out = "buttonOut/01";
+const char *topic_in = "buttonIn/01";*/
 
 static const char *root_ca PROGMEM = R"EOF(
 -----BEGIN CERTIFICATE-----
@@ -63,21 +67,38 @@ void setup()
     Serial.print("Connecting to ");
     Serial.println(ssid);
 
-    // WiFiManagerParameter stopbusidparameter("StopID", "Topic", topic_out, 20);
+    WiFiManagerParameter parameter_stopid("StopID", "StopId", stopID.c_str(), 3);
+    //WiFiManagerParameter parameter_server("Server", "Server", mqtt_server.c_str(), 40);
+    //WiFiManagerParameter parameter_port("Port", "Port", mqtt_port.c_str(), 6);
+    WiFiManagerParameter parameter_user("Username", "Username", mqtt_username.c_str(), 20);
+    WiFiManagerParameter parameter_pw("Pw", "Pw", mqtt_password.c_str(), 20);
+
+
+
     WiFiManager wifiManager;
 
-    /// wifiManager.addParameter(&stopbusidparameter);
+    wifiManager.addParameter(&parameter_stopid);
+    //wifiManager.addParameter(&parameter_server);
+    //wifiManager.addParameter(&parameter_port);
+    wifiManager.addParameter(&parameter_user);
+    wifiManager.addParameter(&parameter_pw);
 
-    wifiManager.autoConnect("esp32");
+    wifiManager.setConfigPortalTimeout(60);
+    wifiManager.startConfigPortal("Smart Bus Stop");
+    
 
-    // topic_String = String(topic_out_new);
+    stopID = String(parameter_stopid.getValue());
+    //mqtt_server = String(parameter_server.getValue());
+    //mqtt_port = String(parameter_port.getValue());
+    mqtt_username = String(parameter_user.getValue());
+    mqtt_password = String(parameter_pw.getValue());
 
     randomSeed(micros());
     Serial.print("WiFi connected at IP address: ");
     Serial.println(WiFi.localIP());
 
     espClient.setCACert(root_ca);
-    client.setServer(mqtt_server, mqtt_port);
+    client.setServer(mqtt_server.c_str(), atoi(mqtt_port.c_str()));
     client.setCallback(callback);
 
     pinMode(BUTTON_PIN, INPUT_PULLUP); // set ESP32 pin to input pull-up mode
@@ -136,10 +157,10 @@ void reconnect()
         String clientId = "ESP8266Client-"; // Create a random client ID
         clientId += String(random(0xffff), HEX);
         // Attempt to connect
-        if (client.connect(clientId.c_str(), mqtt_username, mqtt_password))
+        if (client.connect(clientId.c_str(), mqtt_username.c_str(), mqtt_password.c_str()))
         {
             Serial.println("Connected");
-            client.subscribe(topic_in); // subscribe the topics here
+            client.subscribe(String(topic + "in/" + stopID).c_str()); // subscribe the topics here
                                         // client.subscribe(command2_topic);   // subscribe the topics here
         }
         else
@@ -158,10 +179,13 @@ void callback(char *topic, byte *payload, unsigned int length)
     for (int i = 0; i < length; i++)
         incommingMessage += (char)payload[i];
     Serial.println("Message arrived from " + String(topic) + ": " + incommingMessage);
+    if (incommingMessage == "0"){
+        currentstateFSM_Led = 0;
+    }
 }
 
 void publishMessage(String payload, boolean retained)
 {
-    if (client.publish(topic_out, payload.c_str(), true))
-        Serial.println("Message published on " + String(topic_out) + ": " + payload);
+    if (client.publish(String(topic + "out/" + stopID).c_str(), payload.c_str(), true))
+        Serial.println("Message published on " + String(topic + "out/" + stopID) + ": " + payload);
 }
