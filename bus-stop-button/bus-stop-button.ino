@@ -10,25 +10,17 @@ WiFiClientSecure espClient;
 PubSubClient client(espClient);
 unsigned long lastMsg = 0;
 
+int currentstateFSM_Led = 0;
+
 #define MSG_BUFFER_SIZE (50)
 char msg[MSG_BUFFER_SIZE];
 
 #define BUTTON_PIN 16 // ESP32 pin GIOP16, which connected to button
 #define LED_PIN 18    // ESP32 pin GIOP18, which connected to led
 
-// variables will change:
-int led_state = LOW;   // the current state of LED
-int button_state;      // the current state of button
-int last_button_state; // the previous state of button
-
-
-WiFiManager wifimanager;
 
 const char *topic_out = "button/01";
 const char *topic_in = "info";
-
-
-
 
 static const char *root_ca PROGMEM = R"EOF(
 -----BEGIN CERTIFICATE-----
@@ -68,30 +60,29 @@ void setup()
 {
 
     Serial.begin(115200);
-    Serial.print("\nConnecting to ");
+    Serial.print("Connecting to ");
     Serial.println(ssid);
 
-    /*WiFiManagerParameter stop_bus_id_parameter("Stop ID", "topic/01", topic_out, 20);
-    wifimanager.addParameter(&stop_bus_id_parameter);*/
+    // WiFiManagerParameter stopbusidparameter("StopID", "Topic", topic_out, 20);
+    WiFiManager wifiManager;
 
-    wifimanager.autoConnect("esp32");
+    /// wifiManager.addParameter(&stopbusidparameter);
 
-    //topic_out = stop_bus_id_parameter.getValue();
+    wifiManager.autoConnect("esp32");
 
+    // topic_String = String(topic_out_new);
 
     randomSeed(micros());
-    Serial.println("\nWiFi connected\nIP address: ");
+    Serial.print("WiFi connected at IP address: ");
     Serial.println(WiFi.localIP());
 
     espClient.setCACert(root_ca);
     client.setServer(mqtt_server, mqtt_port);
     client.setCallback(callback);
 
-
     pinMode(BUTTON_PIN, INPUT_PULLUP); // set ESP32 pin to input pull-up mode
     pinMode(LED_PIN, OUTPUT);          // set ESP32 pin to output mode
 
-    button_state = digitalRead(BUTTON_PIN);
 }
 
 void loop()
@@ -100,27 +91,40 @@ void loop()
     if (!client.connected())
         reconnect();
     client.loop();
+    
+    // 1.0 input read
+    int buttonState;
+    buttonState = digitalRead(BUTTON_PIN);
 
+    // input to enum
 
-    last_button_state = button_state;       // save the last state
-    button_state = digitalRead(BUTTON_PIN); // read new state
+    // 2.0 future state
+    int futurestateFSM_Led;
 
-    if (last_button_state == HIGH && button_state == LOW)
+    // default future state = current state
+    futurestateFSM_Led = currentstateFSM_Led;
+    if (currentstateFSM_Led == 0 && buttonState == HIGH)
+        futurestateFSM_Led = 1;
+    if (currentstateFSM_Led == 1 && buttonState == LOW)
+        futurestateFSM_Led = 2;
+    if (currentstateFSM_Led == 2 && buttonState == HIGH)
+        futurestateFSM_Led = 3;
+    if (currentstateFSM_Led == 3 && buttonState == LOW)
+        futurestateFSM_Led = 0;
+
+    // 3.0  on entry and on exit actions
+    if (futurestateFSM_Led != currentstateFSM_Led)
     {
-        Serial.println("The button is pressed");
-
-        // toggle state of LED
-        led_state = !led_state;
-
-        // control LED arccoding to the toggled state
-        digitalWrite(LED_PIN, led_state);
-
-        
-
-
-        publishMessage(topic_out, String(led_state), true);
-
+        if (futurestateFSM_Led == 1)
+            {digitalWrite(LED_PIN, LOW);
+            publishMessage(String(LOW), true);}
+        if (futurestateFSM_Led == 3)
+            {digitalWrite(LED_PIN, HIGH);
+            publishMessage(String(HIGH), true);}
     }
+
+    // 4.0 transition
+    currentstateFSM_Led = futurestateFSM_Led;
 }
 
 void reconnect()
@@ -128,19 +132,19 @@ void reconnect()
     // Loop until we’re reconnected
     while (!client.connected())
     {
-        Serial.print("Attempting MQTT connection… ");
+        Serial.print("Attempting MQTT connection. ");
         String clientId = "ESP8266Client-"; // Create a random client ID
         clientId += String(random(0xffff), HEX);
         // Attempt to connect
         if (client.connect(clientId.c_str(), mqtt_username, mqtt_password))
         {
-            Serial.println("connected");
+            Serial.println("Connected");
             client.subscribe(topic_in); // subscribe the topics here
-                                       // client.subscribe(command2_topic);   // subscribe the topics here
+                                        // client.subscribe(command2_topic);   // subscribe the topics here
         }
         else
         {
-            Serial.print("failed, rc=");
+            Serial.print("Failed, rc=");
             Serial.print(client.state());
             Serial.println(" try again in 5 seconds"); // Wait 5 seconds before retrying
             delay(5000);
@@ -153,12 +157,11 @@ void callback(char *topic, byte *payload, unsigned int length)
     String incommingMessage = "";
     for (int i = 0; i < length; i++)
         incommingMessage += (char)payload[i];
-    Serial.println("Message arrived [" + String(topic) + "]: " + incommingMessage);
-   
+    Serial.println("Message arrived from " + String(topic) + ": " + incommingMessage);
 }
 
-void publishMessage(const char *topic, String payload, boolean retained)
+void publishMessage(String payload, boolean retained)
 {
-    if (client.publish(topic, payload.c_str(), true))
-        Serial.println("Message published [" + String(topic) + "]: " + payload);
+    if (client.publish(topic_out, payload.c_str(), true))
+        Serial.println("Message published on " + String(topic_out) + ": " + payload);
 }
