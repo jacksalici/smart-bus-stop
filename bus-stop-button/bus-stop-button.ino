@@ -19,7 +19,7 @@ int currentstateFSM_Led = 0;
 #define MSG_BUFFER_SIZE (50)
 char msg[MSG_BUFFER_SIZE];
 
-String topic = "hButton/";
+String topic = "devices/hButtons/";
 
 
 String stopID = "01";
@@ -160,7 +160,7 @@ void reconnect()
         if (client.connect(clientId.c_str(), mqtt_username.c_str(), mqtt_password.c_str()))
         {
             Serial.println("Connected");
-            client.subscribe(String(topic + "in/" + stopID).c_str()); // subscribe the topics here
+            client.subscribe(String(topic + "to/" + stopID).c_str()); // subscribe the topics here
                                         // client.subscribe(command2_topic);   // subscribe the topics here
         }
         else
@@ -188,6 +188,6 @@ void callback(char *topic, byte *payload, unsigned int length)
 
 void publishMessage(String payload, boolean retained)
 {
-    if (client.publish(String(topic + "out/" + stopID).c_str(), payload.c_str(), true))
-        Serial.println("Message published on " + String(topic + "out/" + stopID) + ": " + payload);
+    if (client.publish(String(topic + "from/" + stopID).c_str(), payload.c_str(), true))
+        Serial.println("Message published on " + String(topic + "from/" + stopID) + ": " + payload);
 }
