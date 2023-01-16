@@ -68,8 +68,8 @@ void setup()
     Serial.println(ssid);
 
     WiFiManagerParameter parameter_stopid("StopID", "StopId", stopID.c_str(), 3);
-    //WiFiManagerParameter parameter_server("Server", "Server", mqtt_server.c_str(), 40);
-    //WiFiManagerParameter parameter_port("Port", "Port", mqtt_port.c_str(), 6);
+    WiFiManagerParameter parameter_server("Server", "Server", mqtt_server.c_str(), 60);
+    WiFiManagerParameter parameter_port("Port", "Port", mqtt_port.c_str(), 6);
     WiFiManagerParameter parameter_user("Username", "Username", mqtt_username.c_str(), 20);
     WiFiManagerParameter parameter_pw("Pw", "Pw", mqtt_password.c_str(), 20);
 
@@ -78,8 +78,8 @@ void setup()
     WiFiManager wifiManager;
 
     wifiManager.addParameter(&parameter_stopid);
-    //wifiManager.addParameter(&parameter_server);
-    //wifiManager.addParameter(&parameter_port);
+    wifiManager.addParameter(&parameter_server);
+    wifiManager.addParameter(&parameter_port);
     wifiManager.addParameter(&parameter_user);
     wifiManager.addParameter(&parameter_pw);
 
@@ -88,8 +88,8 @@ void setup()
     
 
     stopID = String(parameter_stopid.getValue());
-    //mqtt_server = String(parameter_server.getValue());
-    //mqtt_port = String(parameter_port.getValue());
+    mqtt_server = String(parameter_server.getValue());
+    mqtt_port = String(parameter_port.getValue());
     mqtt_username = String(parameter_user.getValue());
     mqtt_password = String(parameter_pw.getValue());
 
@@ -181,6 +181,8 @@ void callback(char *topic, byte *payload, unsigned int length)
     Serial.println("Message arrived from " + String(topic) + ": " + incommingMessage);
     if (incommingMessage == "0"){
         currentstateFSM_Led = 0;
+    } else if (incommingMessage == "1"){
+        currentstateFSM_Led = 2;
     }
 }
 
