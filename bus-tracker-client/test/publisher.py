@@ -63,7 +63,7 @@ client.subscribe("encyclopedia/#", qos=1)
 
 # a single publish, this can also be done in loops, etc.
 data = {"fragile": "true"}
-client.publish("devices/fermate/id_fermata/id_corsa", payload=json.dumps(data), qos=1)
+client.publish("devices/fermate/id_fermata/corse/id_corsa", payload=json.dumps(data), qos=1)
 
 # loop_forever for simplicity, here you need to stop the loop manually
 # you can also use loop_start and loop_stop
