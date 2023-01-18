@@ -57,7 +57,7 @@ client.on_message = on_message
 client.on_publish = on_publish
 
 # subscribe to all topics of encyclopedia by using the wildcard "#"
-client.subscribe("devices/fermate/id_fermata/id_corsa", qos=1)
+client.subscribe("devices/fermate/id_fermata/corse/id_corsa", qos=1)
 
 # a single publish, this can also be done in loops, etc.
 # client.publish("encyclopedia/temperature", payload="hot", qos=1)
