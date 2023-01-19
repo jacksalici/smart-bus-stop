@@ -53,6 +53,7 @@ def session_handler():
 
 
 def getBusRoutes(stop_id):
+    
     with requests.get(f"https://opendata.comune.bologna.it/api/v2/catalog/datasets/tper-vigente-mattina/records?limit=100&offset=0&refine=stop_id%3A{stop_id}&timezone=Europe%2FBerlin") as res:
         if (res.status_code == 200):
             routes = [elem["record"]["fields"] for elem in res.json()["records"] ]
@@ -171,7 +172,7 @@ def logout():
 
 
 
-
-with open("./busStopDataset.json", "r") as file:
-        dataset=json.load(file)
-app.run()
+if __name__ == '__main__':
+    with open("./busStopDataset.json", "r") as file:
+            dataset=json.load(file)
+    app.run()

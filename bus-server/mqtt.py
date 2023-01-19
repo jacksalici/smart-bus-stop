@@ -2,6 +2,45 @@
 
 import paho.mqtt.client as paho
 from paho import mqtt
+import json, sqlite3
+
+
+
+
+def toggleHButton (stopID, counter):
+    print("Toggled h button for the stop " + stopID + ": "+ str(counter))
+    
+
+def peopleCounter(stopID, counter):
+    print("People Counter " + stopID + ": "+ str(counter))
+
+def updateBus(busDict):
+    print(busDict)
+    connection = sqlite3.connect('database.db', check_same_thread=False)
+    cursor = connection.cursor()
+    """cursor.execute('insert or replace into buses values(?,?,?,?)',
+                   (busDict["id_bus"],
+                    str([
+                        busDict["latitude"],
+                        busDict["longitude"]]),
+                    busDict["fermata"],
+                    busDict["seats_count"],
+                    ))
+    """
+    cursor.execute('insert or replace into buses values(?,?,?,?)',
+                   ("01",
+                    str([
+                        busDict["latitude"],
+                        busDict["longitude"]]),
+                    "61503",
+                    busDict["seats_count"],
+                    ))
+    
+    connection.commit()
+
+    
+
+    
 
 
 class MqttClient:
@@ -22,7 +61,24 @@ class MqttClient:
 
     # print message, useful for checking if it was successful
     def on_message(self,client, userdata, msg):
-        print(msg.topic + " - " + str(msg.payload.decode("utf-8")))
+        print("Message arrived from " + msg.topic + " - " + str(msg.payload.decode("utf-8")))
+        
+        topicArray = str(msg.topic).split("/")
+        #devices/hButtons/from/01 - 0
+        if len(topicArray)>3:
+            if topicArray[1] == "hButtons":
+                toggleHButton(topicArray[3], bool(msg.payload.decode("utf-8")))
+            
+        #devices/fermate/01/contapersone/ - 14
+        if len(topicArray)>3:
+            if topicArray[3] == "contapersone":
+                peopleCounter(topicArray[2], msg.payload.decode("utf-8"))
+        
+        #devices/buses/id_bus - {"id_bus":"id_bus","latitude":44.8909336,"longitude":11.0672094,"seats_count":2,"fermata":""}
+        if len(topicArray)>2:
+            if topicArray[1] == "buses":
+                updateBus(json.loads(str(msg.payload.decode("utf-8"))))
+        
 
     def __init__(self) -> None:
         
