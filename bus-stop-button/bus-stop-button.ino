@@ -13,6 +13,8 @@ unsigned long lastMsg = 0;
 int currentstateFSM_Led = 0;
 int lastPotentiometerValue = 0;
 
+unsigned long lastMillisCounter = 0;
+
 #define BUTTON_PIN 16 // ESP32 pin GIOP16, which connected to button
 #define LED_PIN 18    // ESP32 pin GIOP18, which connected to led
 #define POTENTIOMETER_IN 36
@@ -23,8 +25,7 @@ char msg[MSG_BUFFER_SIZE];
 
 String topic = "devices/hButtons/";
 
-
-String stopID = "01";
+String stopID = "61503";
 /*const char *topic_out = "buttonOut/01";
 const char *topic_in = "buttonIn/01";*/
 
@@ -77,7 +78,6 @@ void setup()
     WiFiManagerParameter parameter_pw("Pw", "Pw", mqtt_password.c_str(), 20);
 */
 
-
     WiFiManager wifiManager;
     /*
     wifiManager.addParameter(&parameter_stopid);
@@ -88,7 +88,7 @@ void setup()
 
     wifiManager.setConfigPortalTimeout(60);
     wifiManager.startConfigPortal("Smart Bus Stop");
-    
+
 
     stopID = String(parameter_stopid.getValue());
     mqtt_server = String(parameter_server.getValue());
@@ -97,7 +97,6 @@ void setup()
     mqtt_password = String(parameter_pw.getValue());
     */
     wifiManager.autoConnect();
-
 
     randomSeed(micros());
     Serial.print("WiFi connected at IP address: ");
@@ -113,8 +112,6 @@ void setup()
     pinMode(POTENTIOMETER_OUT, OUTPUT);
 
     digitalWrite(POTENTIOMETER_OUT, HIGH);
-    
-
 }
 
 void loop()
@@ -122,17 +119,20 @@ void loop()
     int potentiometerValue = map(analogRead(POTENTIOMETER_IN), 0, 4096, 0, 100);
     Serial.println("Potentiometer value read: " + String(potentiometerValue));
 
-    if (potentiometerValue>lastPotentiometerValue+10 || potentiometerValue<lastPotentiometerValue-10){
-            lastPotentiometerValue=potentiometerValue;
+    if (millis() - lastMillisCounter > 120000)
+    {
+        lastMillisCounter = millis();
+        if (potentiometerValue > lastPotentiometerValue + 5 || potentiometerValue < lastPotentiometerValue - 5)
+        {
+            lastPotentiometerValue = potentiometerValue;
             publishMessage("devices/fermate/" + stopID + "/contapersone/", String(potentiometerValue), true);
-            
-
+        }
     }
 
     if (!client.connected())
         reconnect();
     client.loop();
-    
+
     // 1.0 input read
     int buttonState;
     buttonState = digitalRead(BUTTON_PIN);
@@ -157,11 +157,15 @@ void loop()
     if (futurestateFSM_Led != currentstateFSM_Led)
     {
         if (futurestateFSM_Led == 1)
-            {digitalWrite(LED_PIN, LOW);
-            publishMessage(String(topic + "from/" + stopID), String(LOW), true);}
+        {
+            digitalWrite(LED_PIN, LOW);
+            publishMessage(String(topic + "from/" + stopID), String(LOW), true);
+        }
         if (futurestateFSM_Led == 3)
-            {digitalWrite(LED_PIN, HIGH);
-            publishMessage(String(topic + "from/" + stopID), String(HIGH), true);}
+        {
+            digitalWrite(LED_PIN, HIGH);
+            publishMessage(String(topic + "from/" + stopID), String(HIGH), true);
+        }
     }
 
     // 4.0 transition
@@ -181,7 +185,7 @@ void reconnect()
         {
             Serial.println("Connected");
             client.subscribe(String(topic + "to/" + stopID).c_str()); // subscribe the topics here
-                                        // client.subscribe(command2_topic);   // subscribe the topics here
+                                                                      // client.subscribe(command2_topic);   // subscribe the topics here
         }
         else
         {
@@ -199,9 +203,12 @@ void callback(char *topic, byte *payload, unsigned int length)
     for (int i = 0; i < length; i++)
         incommingMessage += (char)payload[i];
     Serial.println("Message arrived from " + String(topic) + ": " + incommingMessage);
-    if (incommingMessage == "0"){
+    if (incommingMessage == "0")
+    {
         currentstateFSM_Led = 0;
-    } else if (incommingMessage == "1"){
+    }
+    else if (incommingMessage == "1")
+    {
         currentstateFSM_Led = 2;
     }
 }
