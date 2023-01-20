@@ -114,5 +114,4 @@ class MqttClient:
         self.client.on_publish = self.on_publish
         self.client.subscribe("#")
         
-        self.client.loop_start()
 
