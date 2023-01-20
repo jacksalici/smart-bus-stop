@@ -35,5 +35,12 @@ void loop() {
  
 //Routine to dump a byte array as hex values to Serial. 
 void printHex(byte *buffer, byte bufferSize) {
+  for (int i = 0; i<4; i++)
+    Serial.write(0xff);
+  
   Serial.write(buffer, bufferSize);
+
+  
+
+
 }

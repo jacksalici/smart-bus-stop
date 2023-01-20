@@ -33,63 +33,45 @@ if ("serial" in navigator) {
 }
 
 async function getReader() {
-    const bufferSize = 1;
+  const bufferSize = 1;
 
-    port = await navigator.serial.requestPort({});
+  port = await navigator.serial.requestPort({});
 
   connectButton.innerText = "Disconnect";
   console.log("Connected using Web Serial API");
   await port.open({ baudRate: 9600, bufferSize });
 
+  
+}
+
+
+async function readInto() {
+
+
+  if (!port) {
+    await getReader();
+  }
   reader = port.readable.getReader({ mode: "byob" });
 
-  
 
-  /*<
-  let buffer = new ArrayBuffer(bufferSize);
-  let bl = 0;
-  let string = "";
+  const myStack = ["", "", "", "", "", "", "", ""];
+  const fistHalfNull = (arr) => arr.slice(0, 4).every((e) => e == "FF");
+  while (1) {
+    const { value, done } = await reader.read(new Uint8Array(1));
 
-  // Set `bufferSize` on open() to at least the size of the buffer.
+    myStack.push(buf2hex(value.buffer).toUpperCase());
 
-  const reader = port.readable.getReader({ mode: "byob" });
-  while (true) {
-    const { value, done } = await reader.read(new Uint8Array(buffer));
-    if (done) {
+    if (myStack.length > 8) myStack.shift();
+
+
+    if (fistHalfNull(myStack)) {
+      console.log("Stream: " + myStack.join());
       break;
     }
-    buffer = value.buffer;*/
-
-  
-
-  // Handle `value`.
-}
-
-async function readString() {
-
-  let buffer = new ArrayBuffer(4);
-  // Read the first 512 bytes.
-  buffer = await readInto(reader, buffer);
-  str = buf2hex(buffer).toUpperCase()
-  console.log(str)
-  return str
-}
-
-async function readInto(reader, buffer) {
-
-  if (!port){
-    await getReader()
-  }  
-  let offset = 0;
-  while (offset < buffer.byteLength) {
-    const { value, done } = await reader.read(new Uint8Array(buffer, offset));
-    if (done) {
-      break;
-    }
-    buffer = value.buffer;
-    offset += value.byteLength;
   }
-  return buffer;
+  reader.releaseLock()
+  return myStack.slice(4, 8).join("");
+
 }
 
 function buf2hex(buffer) {
@@ -99,11 +81,9 @@ function buf2hex(buffer) {
     .join("");
 }
 
+document.getElementById("readtag").addEventListener("click", async () => {
+  str = await readInto();
 
-
-document.getElementById("readtag").addEventListener("click", async ()=>{
-    str = await readString()
-    
-    document.getElementById("login_form_id").value = str
-    document.getElementById("login_form_key").value = str
-})
+  document.getElementById("login_form_id").value = str;
+  document.getElementById("login_form_key").value = str;
+});
