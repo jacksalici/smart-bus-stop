@@ -2,6 +2,18 @@
 from creator import db
 from flask_login import UserMixin
 
+class Booking(db.Model):
+    __tablename__ = "bookings"
+    stopid = db.Column(db.String(10), db.ForeignKey('stops.id'), primary_key=True)
+    busid = db.Column(db.String(10), primary_key=True)
+    userid = db.Column(db.String(10), db.ForeignKey('users.id'), primary_key=True)
+    time = db.Column(db.Integer(), primary_key=True)
+
+
+    
+
+     
+
 class User(UserMixin, db.Model):
     __tablename__ = "users"
     
@@ -40,4 +52,3 @@ class Bus(db.Model):
         return '<Bus %r>' % self.id
     
     
-#devices/buses/id_bus - {"id_bus":"id_bus","latitude":44.8909336,"longitude":11.0672094,"seats_count":1,"fermata":"none"}

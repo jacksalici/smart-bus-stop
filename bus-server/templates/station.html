@@ -1,6 +1,11 @@
 {% extends 'baseof.html' %} {% block titlepage %}{{name}}{% endblock %} {% block
 title %}{{name}}{% endblock %} {% block content %}
-<script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous" async></script>
+<script
+  src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js"
+  integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D"
+  crossorigin="anonymous"
+  async
+></script>
 
 <div class="row">
   <div class="col">
@@ -17,15 +22,19 @@ title %}{{name}}{% endblock %} {% block content %}
 
     <div class="container-fluid mt-2 p-5 rounded-3 bg-light">
       {% if current_user.is_authenticated %}
-      <h4>Benvenuto {{
-        current_user.name}}.
-      </h4>
+      <h4>Benvenuto {{ current_user.name}}.</h4>
 
-      <button class="btn btn-primary mt-2" type="submit">
+      <button
+        class="btn btn-primary mt-2"
+        onclick="book('{{bus.id | string}}', '{{current_user.id | string}}')"
+        type="submit"
+      >
         Prenota un posto sul prossimo autobus
       </button>
 
-    <a class="btn btn-warning mt-2" href="{{url_for('logout')}}">Esegui il logout prima di allontanarti</a>
+      <a class="btn btn-warning mt-2" href="{{url_for('logout')}}"
+        >Esegui il logout prima di allontanarti</a
+      >
 
       {% else %}
 
@@ -39,7 +48,6 @@ title %}{{name}}{% endblock %} {% block content %}
       </button>
 
       {% endif %}
-      
     </div>
   </div>
   <div class="col">
@@ -47,11 +55,9 @@ title %}{{name}}{% endblock %} {% block content %}
   </div>
 </div>
 
-<button
-        class="btn link-light"
-        type="button"
-        id="SerialConnectButton"
-      > Serial Connect </button>
+<button class="btn link-light" type="button" id="SerialConnectButton">
+  Serial Connect
+</button>
 
 <div class="container-fluid mt-2 p-3 rounded-3 bg-light">
   <h2 class="m-2">Prossime linee:</h2>
@@ -74,7 +80,7 @@ title %}{{name}}{% endblock %} {% block content %}
     <option value="3">Three</option>
   </select>
 
-  <div class="row " data-masonry='{"percentPosition": true }' id="lines">
+  <div class="row" data-masonry='{"percentPosition": true }' id="lines">
     {%for record in routes%}
     <div class="col-sm-6 col-lg-4 mb-4">
       <div class="card">
@@ -86,14 +92,10 @@ title %}{{name}}{% endblock %} {% block content %}
           <p class="cart-text">
             Direction: {{record.direction_id}}, day: {{record.giorno}}
           </p>
-          {% if current_user.is_authenticated %} 
-          <a href="#" class="btn btn-primary">Prenota posto</a>
+          {% if current_user.is_authenticated %}
+          <button onclick="book('{{record.route_id | string}}', '{{current_user.id | string}}')" class="btn btn-primary">Prenota posto</button>
 
-            {% else %} 
-
-            
-
-            {% endif %}
+          {% else %} {% endif %}
         </div>
       </div>
     </div>
@@ -146,7 +148,8 @@ title %}{{name}}{% endblock %} {% block content %}
           </div>
 
           <div class="form-group mb-3">
-            {{ form.id(id="login_form_id", class_="form-control",placeholder="ID")}}
+            {{ form.id(id="login_form_id",
+            class_="form-control",placeholder="ID")}}
           </div>
           {% for error in form.id.errors %}
           <div
@@ -164,7 +167,8 @@ title %}{{name}}{% endblock %} {% block content %}
           {% endfor%}
 
           <div class="form-group mb-3">
-            {{ form.key(id="login_form_key", class_="form-control",placeholder="Key")}}
+            {{ form.key(id="login_form_key",
+            class_="form-control",placeholder="Key")}}
           </div>
           {% for error in form.key.errors %}
           <div
@@ -178,7 +182,6 @@ title %}{{name}}{% endblock %} {% block content %}
               data-bs-dismiss="alert"
               aria-label="Close"
             ></button>
-
           </div>
           {% endfor%}
 
@@ -190,11 +193,7 @@ title %}{{name}}{% endblock %} {% block content %}
             >
               Annulla
             </button>
-            <button
-              type="button"
-              class="btn btn-primary"
-              id="readtag"
-            >
+            <button type="button" class="btn btn-primary" id="readtag">
               Leggi tag
             </button>
             <button type="submit" class="btn btn-block btn-success">
@@ -207,7 +206,34 @@ title %}{{name}}{% endblock %} {% block content %}
   </div>
 
   <script>
-    const stationsList = {{ stations | safe}};
+      const stationsList = {{ stations | safe}};
+
+      function book (id, user) {
+        let data = {
+          "bus" : id,
+          "user" : user,
+          "stop": stationsList[0].id,
+          "time": Date.now()
+        }
+        console.log(data)
+        fetch("/set/", { method:"POST", body: JSON.stringify(data ) })
+        .then(res => {
+          if (res.status==200) { alert("Booked"); }
+          else {
+            console.error(res);
+            alert("Opps an error has occured.");
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          alert("Opps an error has occured.");
+        });
+
+    }
+
+
+
+        
   </script>
 
   <script

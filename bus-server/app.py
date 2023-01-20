@@ -5,7 +5,8 @@ from flask import (
     flash,
     url_for,
     session,
-    request
+    request,
+     make_response
 )
 
 from datetime import timedelta
@@ -31,7 +32,7 @@ from flask_login import (
 )
 
 from creator import create_app,db,login_manager,bcrypt,mqttClient
-from models import User, Bus, Stop
+from models import User, Bus, Stop, Booking
 from forms import login_form,register_form
 
 import requests, json
@@ -54,6 +55,16 @@ def getBusRoutes(stop_id):
         if (res.status_code == 200):
             routes = [elem["record"]["fields"] for elem in res.json()["records"] ]
             return routes
+
+@app.route("/set/", methods=["POST"])
+def set():
+    myjson = json.loads(request.get_data())
+    print (myjson)
+    new_booking = Booking(stopid=myjson["stop"], busid = myjson["bus"], userid=myjson["user"],time=myjson["time"])
+    db.session.add(new_booking)
+    db.session.commit()
+    
+    return make_response("ok", 200)
 
 
 
