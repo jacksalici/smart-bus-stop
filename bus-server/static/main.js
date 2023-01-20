@@ -1,6 +1,6 @@
 function displayMap(busLoc = undefined) {
   var map = L.map("map", {
-    center: stationsList[Object.keys(stationsList)[0]]["coord"],
+    center: stationsList[0]["location"],
     zoom: 9,
   });
 
@@ -28,11 +28,11 @@ function displayMap(busLoc = undefined) {
       "https://img.icons8.com/external-flaticons-flat-flat-icons/64/000000/external-bus-stop-traditional-marketing-flaticons-flat-flat-icons.png",
   });
 
-  Object.keys(stationsList).forEach((station) => {
-    var text = `Bus Stop "${stationsList[station].name}" - <a href="/${station}">View it</a>`;
-    L.marker(stationsList[station].coord, {
+  stationsList.forEach((station) => {
+    var text = `Bus Stop "${station.name}" - <a href="/${station.id}">View it</a>`;
+    L.marker(station.location, {
       icon: busStopIcon,
-      alt: "Station " + stationsList[station].name,
+      alt: "Station " + station.name,
     })
       .addTo(map)
       .bindPopup(text);

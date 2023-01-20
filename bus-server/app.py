@@ -42,9 +42,6 @@ def load_user(user_id):
 
 app = create_app()
 
-
-dataset=[]
-
 @app.before_request
 def session_handler():
     session.permanent = True
@@ -62,16 +59,35 @@ def getBusRoutes(stop_id):
 
 @app.route("/")
 def home():
+    dataset=[]
+    stops = Stop.query.all()
+    for stop in stops:
+        dataset.append({"id": stop.id, 
+                        "name": stop.name, 
+                        "location": json.loads(stop.position),
+                        "people": stop.people if stop.people != None else "-", 
+                        "hButton": stop.hButton, })
+    
     return render_template('index.html', stations=dataset, name = "Bus Stops Map")
 
 @app.route("/<station>", methods=("GET", "POST"), strict_slashes=False)
 def page(station):
+    dataset=[]
+    stop = Stop.query.filter(Stop.id == station).first()
+    dataset.append({"id": stop.id, 
+                    "name": stop.name, 
+                    "location": json.loads(stop.position), 
+                    "people": stop.people if stop.people != None else "-", 
+                    "hButton": stop.hButton, })
+    
 
     bus = Bus.query.filter_by(stop_id=str(station)).first()
     if bus:
         busDict = {"id": bus.id, "location": json.loads(bus.position), "counter": str(bus.seatsCount)}
     else:
         busDict = {"id": "", "location": "", "counter": "0"}
+        
+    
         
     form = login_form()
 
@@ -86,10 +102,10 @@ def page(station):
         except Exception as e:
             flash(e, "danger")
 
-    nametext = "\""+ dataset[station]["name"] + "\"" if dataset[station]["name"] != "" else ""
+    nametext = "\""+ dataset[0]["name"] + "\"" if dataset[0]["name"] != "" else ""
     return render_template('station.html', 
         routes = getBusRoutes(station), 
-        stations={station: dataset[station]}, 
+        stations=dataset, 
         name="FERMATA "+ nametext + " #"+station, 
         bus=busDict, 
         form=form,
@@ -179,6 +195,7 @@ def logout():
 
 
 if __name__ == '__main__':
-    with open("./busStopDataset.json", "r") as file:
-            dataset=json.load(file)
+    #with open("./busStopDataset.json", "r") as file:
+    #       dataset=json.load(file)
+    
     app.run()

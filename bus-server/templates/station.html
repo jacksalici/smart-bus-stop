@@ -1,13 +1,18 @@
 {% extends 'baseof.html' %} {% block titlepage %}{{name}}{% endblock %} {% block
 title %}{{name}}{% endblock %} {% block content %}
+<script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous" async></script>
 
 <div class="row">
   <div class="col">
     <div class="container-fluid bg-primary p-5 text-light rounded-3">
       <h4>Prossimo bus:</h4>
+      {%if bus.id != ""%}
       <h2>#{{bus.id}}</h2>
       <h5>Posti occupati: {{bus.counter}}</h5>
       <p>Guarda la sua posizione in tempo reale sulla mappa.</p>
+      {% else %}
+      <p>Non disponibile, riprova più tardi.</p>
+      {% endif %}
     </div>
 
     <div class="container-fluid mt-2 p-5 rounded-3 bg-light">
@@ -69,9 +74,9 @@ title %}{{name}}{% endblock %} {% block content %}
     <option value="3">Three</option>
   </select>
 
-  <div class="row row-cols-auto" id="lines">
+  <div class="row " data-masonry='{"percentPosition": true }' id="lines">
     {%for record in routes%}
-    <div class="col m-3 p-1">
+    <div class="col-sm-6 col-lg-4 mb-4">
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">Route id {{record.route_id}}</h5>

@@ -3,17 +3,23 @@
 
 {% block title %}{{name}}{% endblock %}
 {% block content %}
+<script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous" async></script>
 
 <div id="map" style="width: 100%; height: 500px"></div>
 
-<div class="row row-cols-2 row-cols-md-5 g-3 mt-3">
-  {% for station_code, station in stations.items() %}
+<div class="row row-cols-2 row-cols-md-5 g-3 mt-3" data-masonry='{"percentPosition": true }'>
+  {% for station in stations %}
   <div class="col">
    <div class="card bg-light">
      <div class="card-body">
        <h5 class="card-title">{{station.name | e}}</h5>
-       <h6 class="card-subtitle text-muted">{{station_code | e}}</h6>
-       <a href="{{station_code}}" class="card-link">Stop link</a>
+       <h6 class="card-subtitle text-muted">{{station.id | e}}</h6>
+       <a href="{{station.id}}" class="card-link">Stop link</a>
+       {% if station.people != '-'%} <span class="badge bg-warning badge-pill badge-warning"> {{station.people}} persone in attesa </span>       {% endif %}
+       {% if station.hButton == 1%} <span class="badge bg-warning badge-pill badge-warning"> Richiesta Assistenza </span>       {% endif %}
+
+       </p>
+
      </div>
        </div>
   </div>
@@ -23,6 +29,7 @@
 
 <script>
   const stationsList = {{ stations | safe}}
+  console.log(stationsList)
 </script>
 
 <script type="text/javascript"
