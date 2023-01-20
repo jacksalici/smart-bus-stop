@@ -30,7 +30,7 @@ from flask_login import (
     login_required,
 )
 
-from creator import create_app,db,login_manager,bcrypt
+from creator import create_app,db,login_manager,bcrypt,mqttClient
 from models import User, Bus, Stop
 from forms import login_form,register_form
 
@@ -69,6 +69,28 @@ def home():
                         "hButton": stop.hButton, })
     
     return render_template('index.html', stations=dataset, name = "Bus Stops Map")
+
+@app.route("/bus-admin")
+def admin():
+    datasetBus=[]
+    buses = Bus.query.all()
+    
+    for bus in buses:
+        stop = Stop.query.filter_by(id = bus.stop_id).first()
+        datasetBus.append({
+            "id": bus.id,
+            "loc": bus.position,
+            "seats":int(bus.seatsCount),
+            "next": stop.id,
+            "hButton": stop.hButton,
+            "people": int(stop.people) if stop.people != None else 0, 
+            "max": 50
+        })
+
+   
+    return render_template('back.html', data=datasetBus, name = "Admin")
+
+
 
 @app.route("/<station>", methods=("GET", "POST"), strict_slashes=False)
 def page(station):

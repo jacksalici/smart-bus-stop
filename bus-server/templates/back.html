@@ -1,0 +1,38 @@
+{% extends 'baseof.html' %} {% block titlepage %}{{name}}{% endblock %} {% block
+title %}{{name}}{% endblock %} {% block content %}
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Bus ID</th>
+      <th scope="col">Location</th>
+      <th scope="col">Next Stop</th>
+      <th scope="col">People on the bus</th>
+      <th scope="col">People at the stop</th>
+      <th scope="col">Max Capacity</th>
+      <th scope="col">♿️</th>
+    </tr>
+  </thead>
+  <tbody>
+    {%for bus in data%}
+
+    <tr {%if bus.seats + bus.people > bus.max %}class="table-danger"{%endif%}</tr>
+      <th scope="row">{{bus.id}}</th>
+      <td>{{bus.loc}}</td>
+      <td>{{bus.next}}</td>
+      <td>{{bus.seats}}</td>
+      <td>{{bus.people}}</td>
+      <td>{{bus.max}}</td>
+      <td>{{bus.hButton}}</td>
+    </tr>
+    {%endfor%}
+  </tbody>
+</table>
+
+<script>
+  window.setTimeout(function () {
+    window.location.reload();
+  }, 10000);
+</script>
+
+{% endblock %}
