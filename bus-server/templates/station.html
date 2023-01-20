@@ -28,6 +28,7 @@ title %}{{name}}{% endblock %} {% block content %}
         class="btn btn-primary mt-2"
         onclick="book('{{bus.id | string}}', '{{current_user.id | string}}')"
         type="submit"
+        {%if bus.id == ""%}disabled{%endif%}
       >
         Prenota un posto sul prossimo autobus
       </button>
