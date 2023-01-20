@@ -19,7 +19,9 @@ def toggleHButton (stopID, counter, mqttclient):
     if bus is not None:
         print(bus[0])
         #mqtt publish to the bus topic
-        mqttclient.publish("devices/busbutton/", counter)
+        id_fermata = "id_fermata"
+        id_corsa = "id_corsa"
+        mqttclient.publish(f'devices/fermate/{id_fermata}/corse/{id_corsa}', json.dumps({"fragile": counter}))
     
     
     
