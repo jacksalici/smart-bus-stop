@@ -30,8 +30,8 @@ from flask_login import (
     login_required,
 )
 
-from creator import create_app,db,login_manager,bcrypt,mqttClient
-from models import User
+from creator import create_app,db,login_manager,bcrypt
+from models import User, Bus, Stop
 from forms import login_form,register_form
 
 import requests, json
@@ -42,7 +42,6 @@ def load_user(user_id):
 
 app = create_app()
 
-mqttClient.client.loop_start()
 
 dataset=[]
 
@@ -68,6 +67,12 @@ def home():
 @app.route("/<station>", methods=("GET", "POST"), strict_slashes=False)
 def page(station):
 
+    bus = Bus.query.filter_by(stop_id=str(station)).first()
+    if bus:
+        busDict = {"id": bus.id, "location": json.loads(bus.position), "counter": str(bus.seatsCount)}
+    else:
+        busDict = {"id": "", "location": "", "counter": "0"}
+        
     form = login_form()
 
     if form.validate_on_submit():
@@ -85,7 +90,8 @@ def page(station):
     return render_template('station.html', 
         routes = getBusRoutes(station), 
         stations={station: dataset[station]}, 
-        name="FERMATA "+ nametext + " #"+station,  
+        name="FERMATA "+ nametext + " #"+station, 
+        bus=busDict, 
         form=form,
         text="Login",
         btn_action="Login")

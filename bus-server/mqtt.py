@@ -7,12 +7,33 @@ import json, sqlite3
 
 
 
-def toggleHButton (stopID, counter):
+def toggleHButton (stopID, counter, mqttclient):
     print("Toggled h button for the stop " + stopID + ": "+ str(counter))
+    connection = sqlite3.connect('database.db', check_same_thread=False)
+    cursor = connection.cursor()
+    cursor.execute('update stops set hButton = ? where id = ?', (counter, stopID))
+    connection.commit()
+    bus = cursor.execute('select id from buses where stop_id = ?', (stopID,)).fetchone()
+    connection.commit()
+    connection.close()
+    if bus is not None:
+        print(bus[0])
+        #mqtt publish to the bus topic
+        mqttclient.publish("devices/busbutton/", counter)
+    
+    
     
 
 def peopleCounter(stopID, counter):
     print("People Counter " + stopID + ": "+ str(counter))
+    connection = sqlite3.connect('database.db', check_same_thread=False)
+    cursor = connection.cursor()
+    cursor.execute('update stops set people = ? where id = ?', (counter, stopID))
+    
+    connection.commit()
+    connection.close()
+    
+    
 
 def updateBus(busDict):
     print(busDict)
@@ -37,6 +58,7 @@ def updateBus(busDict):
                     ))
     
     connection.commit()
+    connection.close()
 
     
 
@@ -46,7 +68,6 @@ def updateBus(busDict):
 class MqttClient:
     
     client = paho.Client(client_id="", userdata=None, protocol=paho.MQTTv5)
-
     # setting callbacks for different events to see if it works, print the message etc.
     def on_connect(self,client, userdata, flags, rc, properties=None):
         print("Connected with code: %s." % rc)
@@ -67,8 +88,8 @@ class MqttClient:
         #devices/hButtons/from/01 - 0
         if len(topicArray)>3:
             if topicArray[1] == "hButtons":
-                toggleHButton(topicArray[3], bool(msg.payload.decode("utf-8")))
-            
+                toggleHButton(topicArray[3], int(msg.payload.decode("utf-8")), self.client)
+
         #devices/fermate/01/contapersone/ - 14
         if len(topicArray)>3:
             if topicArray[3] == "contapersone":
@@ -90,3 +111,6 @@ class MqttClient:
         self.client.on_message = self.on_message
         self.client.on_publish = self.on_publish
         self.client.subscribe("#")
+        
+        self.client.loop_start()
+

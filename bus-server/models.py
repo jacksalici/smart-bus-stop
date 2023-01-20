@@ -19,9 +19,13 @@ class Stop(db.Model):
     id = db.Column(db.String(10), primary_key=True)
     position = db.Column(db.String(80), unique=False, nullable=False)
     name = db.Column(db.String(50), nullable=True)
+    people = db.Column(db.Integer(), nullable=True)
+    hButton = db.Column(db.Integer(), nullable=True)
+
+
 
     def __repr__(self):
-        return '<User %r>' % self.id
+        return '<Stop %r>' % self.id
     
     
 class Bus(db.Model):
@@ -29,7 +33,7 @@ class Bus(db.Model):
     
     id = db.Column(db.String(10), primary_key=True)
     position = db.Column(db.String(80), unique=False, nullable=False)
-    fermata = db.Column(db.String(50), nullable=True)
+    stop_id = db.Column(db.String(50), nullable=True)
     seatsCount = db.Column(db.Integer(), nullable=True)
 
     def __repr__(self):

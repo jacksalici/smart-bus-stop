@@ -5,7 +5,8 @@ title %}{{name}}{% endblock %} {% block content %}
   <div class="col">
     <div class="container-fluid bg-primary p-5 text-light rounded-3">
       <h4>Prossimo bus:</h4>
-      <h2>7 min</h2>
+      <h2>#{{bus.id}}</h2>
+      <h5>Posti occupati: {{bus.counter}}</h5>
       <p>Guarda la sua posizione in tempo reale sulla mappa.</p>
     </div>
 
@@ -215,7 +216,7 @@ title %}{{name}}{% endblock %} {% block content %}
   ></script>
 
   <script>
-    displayMap();
+    displayMap({{bus.location}});
   </script>
 
   {% endblock %}
