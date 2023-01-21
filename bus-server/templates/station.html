@@ -10,11 +10,16 @@ title %}{{name}}{% endblock %} {% block content %}
 <div class="row">
   <div class="col">
     <div class="container-fluid bg-primary p-5 text-light rounded-3">
+      {%if bus.id != ""%}
+      <h1 class="display-1 strog text-light text-opacity-50"><b>BUS{{bus.id}}</b></h1>
+      {%endif%}
       <h4>Prossimo bus:</h4>
       {%if bus.id != ""%}
-      <h2>#{{bus.id}}</h2>
-      <h5>Posti occupati: {{bus.counter}}</h5>
-      <p>Guarda la sua posizione in tempo reale sulla mappa.</p>
+      {%if eta != ""%}
+      <h2>{{eta}} minuti</h2>
+      {%endif%}
+      <h5 class="mt-5">Posti occupati: {{bus.counter}}</h5>
+      <p class="text-light text-opacity-50">Guarda la sua posizione in tempo reale sulla mappa.</p>
       {% else %}
       <p>Non disponibile, riprova più tardi.</p>
       {% endif %}
