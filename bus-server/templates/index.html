@@ -14,7 +14,7 @@
      <div class="card-body">
        <h5 class="card-title">{{station.name | e}}</h5>
        <h6 class="card-subtitle text-muted">{{station.id | e}}</h6>
-       <a href="{{station.id}}" class="card-link">Stop link</a>
+       <a href="stop/{{station.id}}" class="card-link">Stop link</a>
        {% if station.people != '-'%} <span class="badge bg-warning badge-pill badge-warning"> {{station.people}} persone in attesa </span>       {% endif %}
        {% if station.hButton == 1%} <span class="badge bg-warning badge-pill badge-warning"> Richiesta Assistenza </span>       {% endif %}
 

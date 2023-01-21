@@ -29,7 +29,7 @@ function displayMap(busLoc = undefined) {
   });
 
   stationsList.forEach((station) => {
-    var text = `Bus Stop "${station.name}" - <a href="/${station.id}">View it</a>`;
+    var text = `Bus Stop "${station.name}" - <a href="/stop/${station.id}">View it</a>`;
     L.marker(station.location, {
       icon: busStopIcon,
       alt: "Station " + station.name,

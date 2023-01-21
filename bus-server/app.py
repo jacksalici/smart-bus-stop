@@ -9,6 +9,14 @@ from flask import (
      make_response
 )
 
+try: 
+    from flask_restplus import Api, Resource
+except ImportError:
+    import werkzeug, flask.scaffold
+    werkzeug.cached_property = werkzeug.utils.cached_property
+    flask.helpers._endpoint_from_view_func = flask.scaffold._endpoint_from_view_func
+    from flask_restplus import Api, Resource
+
 from datetime import timedelta
 from sqlalchemy.exc import (
     IntegrityError,
@@ -31,7 +39,7 @@ from flask_login import (
     login_required,
 )
 
-from creator import create_app,db,login_manager,bcrypt,mqttClient
+from creator import create_app,db,login_manager,bcrypt,mqttClient,api
 from models import User, Bus, Stop, Booking
 from forms import login_form,register_form
 
@@ -43,11 +51,41 @@ def load_user(user_id):
 
 app = create_app()
 
+
+
 @app.before_request
 def session_handler():
     session.permanent = True
     app.permanent_session_lifetime = timedelta(minutes=1)
 
+
+################## API
+
+
+
+@api.route('/hello')
+class InfoApi(Resource):
+    @api.doc('info')
+    def get(self):
+        '''Info about the APIs.'''
+        return {'name': 'Smart Bus Station', 'version': '0.1.0'}
+    
+@api.route('/crowd', defaults={'stop_id': None})
+@api.route('/crowd/<stop_id>')
+@api.param('stop_id', 'The stop code')
+class CrowdApi(Resource):
+    @api.doc('crowd')
+    def get(self, stop_id):
+        '''Fetch a given or all the stops'''
+
+        if not stop_id:
+            stops = Stop.query.all()
+        else:
+            stops = Stop.query.filter_by(id = stop_id).all() 
+            
+        return [{"id": stop.id, "loc": json.loads(stop.position), "currentCrowd": stop.people} for stop in stops if stop.people]
+    
+################## FETCH API
 
 def getBusRoutes(stop_id):
     
@@ -55,6 +93,8 @@ def getBusRoutes(stop_id):
         if (res.status_code == 200):
             routes = [elem["record"]["fields"] for elem in res.json()["records"] ]
             return routes
+        
+################## PAGES POST METHOD
 
 @app.route("/set/", methods=["POST"])
 def set():
@@ -66,7 +106,7 @@ def set():
     
     return make_response("ok", 200)
 
-
+################## PAGES
 
 @app.route("/")
 def home():
@@ -103,7 +143,7 @@ def admin():
 
 
 
-@app.route("/<station>", methods=("GET", "POST"), strict_slashes=False)
+@app.route("/stop/<station>", methods=("GET", "POST"), strict_slashes=False)
 def page(station):
     dataset=[]
     stop = Stop.query.filter(Stop.id == station).first()
@@ -225,10 +265,7 @@ def logout():
 
 
 
-
+################## MAIN
 
 if __name__ == '__main__':
-    #with open("./busStopDataset.json", "r") as file:
-    #       dataset=json.load(file)
-    
     app.run()
