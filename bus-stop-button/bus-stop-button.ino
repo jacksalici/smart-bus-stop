@@ -1,10 +1,22 @@
 
 #include <WiFiManager.h>
-
 #include "credential.h"
 #include <WiFi.h>
 #include <PubSubClient.h>
 #include <WiFiClientSecure.h>
+
+/*
+credential.h file:
+
+String ssid     = "***"
+String password = "***";
+String mqtt_username = "fran_student";
+String mqtt_password = "Franhive1";
+String mqtt_server = "d1690858e84545978808a4cc1505ee04.s2.eu.hivemq.cloud";
+String mqtt_port = "8883";
+
+*/
+
 
 WiFiClientSecure espClient;
 PubSubClient client(espClient);
@@ -14,6 +26,8 @@ int currentstateFSM_Led = 0;
 int lastPotentiometerValue = 0;
 
 unsigned long lastMillisCounter = 0;
+
+String updateTime = "120000";
 
 #define BUTTON_PIN 16 // ESP32 pin GIOP16, which connected to button
 #define LED_PIN 18    // ESP32 pin GIOP18, which connected to led
@@ -26,8 +40,8 @@ char msg[MSG_BUFFER_SIZE];
 String topic = "devices/hButtons/";
 
 String stopID = "61503";
-/*const char *topic_out = "buttonOut/01";
-const char *topic_in = "buttonIn/01";*/
+
+
 
 static const char *root_ca PROGMEM = R"EOF(
 -----BEGIN CERTIFICATE-----
@@ -70,21 +84,24 @@ void setup()
     Serial.print("Connecting to ");
     Serial.println(ssid);
 
-    /*
-    WiFiManagerParameter parameter_stopid("StopID", "StopId", stopID.c_str(), 3);
+    
+    WiFiManagerParameter parameter_stopid("StopID", "StopId", stopID.c_str(), 10);
     WiFiManagerParameter parameter_server("Server", "Server", mqtt_server.c_str(), 60);
     WiFiManagerParameter parameter_port("Port", "Port", mqtt_port.c_str(), 6);
     WiFiManagerParameter parameter_user("Username", "Username", mqtt_username.c_str(), 20);
     WiFiManagerParameter parameter_pw("Pw", "Pw", mqtt_password.c_str(), 20);
-*/
+    WiFiManagerParameter parameter_delta("RefreshRate", "Refresh Rate Millis", updateTime.c_str(), 10);
+
 
     WiFiManager wifiManager;
-    /*
+    
     wifiManager.addParameter(&parameter_stopid);
     wifiManager.addParameter(&parameter_server);
     wifiManager.addParameter(&parameter_port);
     wifiManager.addParameter(&parameter_user);
     wifiManager.addParameter(&parameter_pw);
+    wifiManager.addParameter(&parameter_delta);
+
 
     wifiManager.setConfigPortalTimeout(60);
     wifiManager.startConfigPortal("Smart Bus Stop");
@@ -95,8 +112,8 @@ void setup()
     mqtt_port = String(parameter_port.getValue());
     mqtt_username = String(parameter_user.getValue());
     mqtt_password = String(parameter_pw.getValue());
-    */
-    wifiManager.autoConnect();
+    updateTime = String(parameter_delta.getValue());
+    //wifiManager.autoConnect();
 
     randomSeed(micros());
     Serial.print("WiFi connected at IP address: ");
@@ -119,7 +136,7 @@ void loop()
     int potentiometerValue = map(analogRead(POTENTIOMETER_IN), 0, 4096, 0, 100);
     Serial.println("Potentiometer value read: " + String(potentiometerValue));
 
-    if (millis() - lastMillisCounter > 120000)
+    if (millis() - lastMillisCounter > atoi(updateTime.c_str()))
     {
         lastMillisCounter = millis();
         if (potentiometerValue > lastPotentiometerValue + 5 || potentiometerValue < lastPotentiometerValue - 5)
@@ -160,11 +177,14 @@ void loop()
         {
             digitalWrite(LED_PIN, LOW);
             publishMessage(String(topic + "from/" + stopID), String(LOW), true);
+
         }
         if (futurestateFSM_Led == 3)
         {
             digitalWrite(LED_PIN, HIGH);
             publishMessage(String(topic + "from/" + stopID), String(HIGH), true);
+            publishMessage("devices/fermate/" + stopID + "/contapersone/", String(potentiometerValue), true);
+
         }
     }
 

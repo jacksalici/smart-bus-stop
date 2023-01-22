@@ -1,8 +1,8 @@
 .vscode
 __pycache__
 credential.h
-bus-stop-button/debug_custom.json
-bus-stop-button/esp32.svd
-bus-stop-button/debug.cfg
+*/debug_custom.json
+*/esp32.svd
+*/debug.cfg
 build/
 bus-server/.env
