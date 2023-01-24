@@ -19,7 +19,7 @@ def toggleHButton (stopID, counter, mqttclient):
     if bus is not None:
         print(bus[0])
         #mqtt publish to the bus topic
-        id_fermata = "id_fermata"
+        id_fermata = stopID
         id_corsa = "id_corsa"
         mqttclient.publish(f'devices/fermate/{id_fermata}/corse/{id_corsa}', json.dumps({"fragile": counter}))
     
@@ -51,11 +51,11 @@ def updateBus(busDict):
                     ))
     """
     cursor.execute('insert or replace into buses values(?,?,?,?)',
-                   ("01",
+                   (busDict["id_bus"],
                     str([
                         busDict["latitude"],
                         busDict["longitude"]]),
-                    "61503",
+                    busDict["fermata"],
                     busDict["seats_count"],
                     ))
     

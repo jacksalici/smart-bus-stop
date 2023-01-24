@@ -160,24 +160,26 @@ def page(station):
     
 
     bus = Bus.query.filter_by(stop_id=str(station)).first()
+    eta = ""
     if bus:
         busDict = {"id": bus.id, "location": json.loads(bus.position), "counter": str(bus.seatsCount)}
+        
+        body = {"locations":[json.loads(stop.position)[::-1],json.loads(bus.position)[::-1]],"destinations":[1]}
+        headers = {
+            'Accept': 'application/json, application/geo+json, application/gpx+xml, img/png; charset=utf-8',
+            'Authorization': os.getenv("ORS_KEY"),
+            'Content-Type': 'application/json; charset=utf-8'
+        }
+        with requests.post('https://api.openrouteservice.org/v2/matrix/driving-car', json=body, headers=headers) as call:
+
+            if call.status_code == 200:
+                eta = round(call.json()["durations"][0][0]  / 60)
+                print(eta)
+           
     else:
         busDict = {"id": "", "location": "", "counter": "0"}
-        
-    body = {"locations":[json.loads(stop.position)[::-1],json.loads(bus.position)[::-1]],"destinations":[1]}
-    headers = {
-        'Accept': 'application/json, application/geo+json, application/gpx+xml, img/png; charset=utf-8',
-        'Authorization': os.getenv("ORS_KEY"),
-        'Content-Type': 'application/json; charset=utf-8'
-    }
-    with requests.post('https://api.openrouteservice.org/v2/matrix/driving-car', json=body, headers=headers) as call:
 
-        if call.status_code == 200:
-            eta = round(call.json()["durations"][0][0]  / 60)
-            print(eta)
-        else:
-            eta = ""
+    
         
     form = login_form()
 
