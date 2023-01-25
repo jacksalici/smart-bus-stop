@@ -33,12 +33,18 @@ if __name__ == "__main__":
     df_fcst = model.predict(df)
     df_fcst = df_fcst[(6 <= df_fcst['ds'].dt.hour) & (df_fcst['ds'].dt.hour <= 21)]
 
+    df_fcst = df_fcst[df_fcst['yhat'] > 0]
+    df_fcst['yhat'] = np.round(df_fcst['yhat'])
+
     end_time = time.time()
     delta_sec = end_time - start_time
     print('\ttime needed (sec) to forecast: ', delta_sec / 60)
 
     print("Performance evaluation...")
     pass
+
+    print("Saving forecasted data...")
+    df_fcst.to_csv('fcst_data', index=False)
 
     print("Done!")
 

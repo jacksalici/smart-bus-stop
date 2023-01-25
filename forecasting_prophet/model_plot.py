@@ -46,6 +46,10 @@ test_fcst = model.predict(df_test_prophet)
 test_fcst = test_fcst[(6 <= test_fcst['ds'].dt.hour) & (test_fcst['ds'].dt.hour <= 21)]
 test_fcst.head()
 
+test_fcst.info()
+test_fcst = test_fcst[test_fcst['yhat']>0]
+test_fcst['yhat'] = np.round(test_fcst['yhat'])
+
 fig, ax = plt.subplots(figsize=(10, 5))
 fig = model.plot(test_fcst, ax=ax)
 ax.set_title('Prophet Forecast')
