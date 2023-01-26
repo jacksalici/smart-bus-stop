@@ -173,8 +173,9 @@ def page(station):
         with requests.post('https://api.openrouteservice.org/v2/matrix/driving-car', json=body, headers=headers) as call:
 
             if call.status_code == 200:
-                eta = round(call.json()["durations"][0][0]  / 60)
-                print(eta)
+                if call.json()["durations"][0][0]:
+                    eta = round(call.json()["durations"][0][0]  / 60)
+                    print(eta)
            
     else:
         busDict = {"id": "", "location": "", "counter": "0"}
