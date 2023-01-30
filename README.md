@@ -1,8 +1,8 @@
 # 🚏 IoT-powered smart bus stop
 
-**To improve the mobility of citizens in a city/metropolis, enabling fast, easy and safe travel, and at the same time, lower management costs for the administrators.**
+**To improve the mobility of citizens in a city, enabling fast, easy and safe travel, and at the same time, lower management costs for the administrators.**
 
-## Abstract
+## 📝 Abstract  
 
 This project has been made as the final project for the Master's Degree in CS IoT course. It focuses on improving public transportation, particularly through city buses. The aim is to create a smart bus stop, which allows easier access to the service and enables (through a network of such stations) an enhancement of the service.
 
@@ -17,41 +17,61 @@ Once the network of smart stops is established, it will be possible to perform s
 
 The project has been developed on Arduino and Esp32 dev-board. Every part works smoothly but some parts have been simplified since more realistic solutions would have been too time-expensive.
 
-## Actors and Architecture  
+**Authors**: Giacomo Salici @jacksalici and Francesco Marucci @MRTCc, University of Modena and Reggio Emilia
+
+## 🏗 Actors and Architecture  
 
 The main actors of the project are the *bus stop*, the *bus stop help button*, *the bus itself* and the *main server*.
 
 ```mermaid
 
-mindmap
-  root((mindmap))
-    Origins
-      Long history
-      ::icon(fa fa-book)
-      Popularisation
-        British popular psychology author Tony Buzan
-    Research
-      On effectiveness<br/>and features
-      On Automatic creation
-        Uses
-            Creative techniques
-            Strategic planning
-            Argument mapping
-    Tools
-      Pen and paper
-      Mermaid
+graph LR;
+broker[Mqtt Broker]
+
+server[Server]-.-|http|stop[Bus Stop]
+server-.-|mqtt|button[Bus Stop Button]
+server-.-|mqtt|bus[Bus Client]
 
 
+stop-->c(Web Client)
+stop-->n(NFC Authentication)
+button-->h(Help Button)
+bus-->t(GPS Tracker)
+bus-->p(Passenger counter)
+
+server-->d(Digital Twin)
+server-->m(Resources Manager)
+server -->a(AI Forecasting)
 
 
 ```
 
-### Main server
+### Main server 🧠
 
-The main server manages a Flask server that offers frontends to the stops. It receives via MQTT from the buses and from the help buttons the data and it couples 
+The main server manages a Flask server that offers frontends to the stops. It is subscribed to all    MQTT topics and it couples the information of each bus and its next stop. All the details, along with the seat bookings are stored in an SQLite database that represents a digital twin of public transport.
 
+The server receives via MQTT the location of each bus and fetches using Open Route Service the ETA to its next station and sends all the data to it. It receives also the number of seats busy.
 
-Il server offre via Flask un'interfaccia utente alle fermate, dalla quale gli utenti possono registrare sul database centrale la loro presenza su un certo bus, solo dopo essersi autenticati usando un sensore nfc e arduino collegato al front-end della singola fermata (usando una nuova funzione js). Il server riceve inoltre via mqtt da tutti i bus la loro posizione in tempo reale e la presenta agli utenti su una mappa interattiva, insieme all'attuale numero di persone presenti sul bus e al tempo stimato di arrivo (calcolato con le api OpenRouteService). Si contano inoltre usando un potenziometro le persone presenti sulle singole fermate e si evidenziano in una interfaccia per amministratori le fermate in cui ci sono troppe persone rispetto alla capienza massima dell'autobus che sta per arrivare lì. Infine in ogni singola fermata vi è un esp32 con un bottone per segnalare la presenza alla fermata di persone con bisogno di assistenza. Il server riceve la richiesta via mqtt e la manda all'autobus che sta per arrivare. Abbiamo poi aperto una API per le informazioni sulle fermate a potenziali clienti (sviluppatori). Abbiamo poi sviluppato (ma non ancora collegato in quanto i risultati sono ancora troppo naive) un algoritmo basato su Prophet della previsione dei tempi di percorrenza.
+From each station, moreover, the server receives the number of people awaiting there and if someone requests help using the specific button. The request is forwarded via MQTT to the upcoming bus.
 
+The count of the people in the crowd is presented to the system administrators with a specific page. Bus lines that can't manage all the people are highlighted.
 
+For the developers, the server has an API endpoint that let to fetch real-time data from the stops such as the number of people there.
 
+Lastly, we develop with Prophet a forecasting model to predict the number of busy seats in a future moment based on the past recorded data. Since it is just a demo project the recorded data was generated using a script, so the model is not accurate.
+
+### Bus Stop 🚏
+
+Each bus stop has a kiosk loaded on the server offered front-end. Users can use a real-time-updated map to see the location of the bus, along with the actual number of busy seats on that bus.
+
+Users can book a seat by logging in using an NFC reader. An Arduino board sends to the serial port the UID of the NFC tag (or smartphone). It is read via front-end using the experimental web serial port API. Since the project is just a demo we used the UID as the authentication key ignoring that it would be a severe vulnerability in an actual realization.
+
+### Bus Stop Help Button 🕹
+
+Each stop is provided with an ESP32 board that let people toggle a button to call for help. The board is separated from the Arduino NFC reader for the sake of modularity and the decoupling principle.
+
+The same ESP32 board read the value of a potentiometer that simulates the presence of an AI-powered camera that counts people.
+
+### Bus Client 🚍  
+
+Each bus is tracked with a GPS sensor. For the demo we created a smartphone app that sends the location and that allows the user to set the number of busy seats and the next stop.
