@@ -205,7 +205,7 @@ void reconnect()
         {
             Serial.println("Connected");
             client.subscribe(String(topic + "to/" + stopID).c_str()); // subscribe the topics here
-                                                                      // client.subscribe(command2_topic);   // subscribe the topics here
+                                                                      // client.subscribe(command2_topic);   
         }
         else
         {
