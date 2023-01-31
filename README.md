@@ -1,6 +1,6 @@
 # 🚏 IoT-powered smart bus stop
 
-**To improve the mobility of citizens in a city, enabling fast, easy and safe travel, and at the same time, lower management costs for the administrators.**
+**To improve the mobility of citizens in a city, enabling faster, easier and safer travel, and at the same time, lower management costs for the administrators.**
 
 ## 📝 Abstract  
 
@@ -26,7 +26,6 @@ The main actors of the project are the *bus stop*, the *bus stop help button*, *
 ![System Design and Architecture - Created with Miro](img/architecture.jpg)
 
 ### Main server 🧠
-
 
 The main server manages a **Flask server** [[code]](bus-server) that offers frontends to the stops. It is subscribed to all MQTT topics and it couples the information of each bus and its next stop. All the details, along with the seat bookings are stored in an SQLite database that represents a digital twin of public transport.
 

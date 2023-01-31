@@ -8,7 +8,7 @@ A led is present to ease the reading of the button state.
 
 The same ESP32 board read the value of a potentiometer that simulates the presence of an AI-powered camera that counts people.
 
-WifiManager allows creating a web portal for easy change of the configuration of the wifi and the MQTT broker params without hardcoding them, along with the ID of the single stop. We used HiveMq free plan. The parameters in these files may not be available in the future, we suggest changing them.
+[WifiManager library](https://github.com/tzapu/WiFiManager) allows creating a web portal for easy change of the configuration of the wifi and the MQTT broker params without hardcoding them, along with the ID of the single stop. We used HiveMq free plan. The parameters in these files may not be available in the future, we suggest changing them.
 
 The data about the button and the crowd are published on specific topics:
 |Topic|Payload|
@@ -52,3 +52,5 @@ pinMode(POTENTIOMETER_OUT, OUTPUT);
 
 digitalWrite(POTENTIOMETER_OUT, HIGH);
 ```
+
+See more about the Mqtt connection [here](https://github.com/hivemq/MQTTgo-v2/blob/main/MQTTv2.ino). My ESP32 board datasheet is [here](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/hw-reference/esp32/get-started-devkitc.html)
