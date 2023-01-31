@@ -76,4 +76,4 @@ Other useful links:
 - [https://www.edmonton.ca/projects_plans/transit/smart-bus-initiative](https://www.edmonton.ca/projects_plans/transit/smart-bus-initiative)
 - [https://extendedmonaco.com/en/project/smart-bus-shelters-a-clever-combination-of-infrastructure-and-digital-technology/](https://extendedmonaco.com/en/project/smart-bus-shelters-a-clever-combination-of-infrastructure-and-digital-technology/)
 - [https://urban-digital.co.il/SmartBusStop.html](https://urban-digital.co.il/SmartBusStop.html)
-- [https://oemkiosks.com/?page=smart-bus-shelters](https://oemkiosks.com/?page=smart-bus-shelters)––
+- [https://oemkiosks.com/?page=smart-bus-shelters](https://oemkiosks.com/?page=smart-bus-shelters)
