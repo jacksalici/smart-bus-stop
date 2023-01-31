@@ -17,11 +17,20 @@ Once the network of smart stops is established, it will be possible to perform s
 
 The project has been developed on Arduino and Esp32 dev-board. Every part works smoothly but some parts have been simplified since more realistic solutions would have been too time-expensive.
 
-**Authors**: Giacomo Salici @jacksalici and Francesco Marucci @MRTCc, University of Modena and Reggio Emilia
+**Authors**: Giacomo Salici @jacksalici and Francesco Marcucci @MRTCc, University of Modena and Reggio Emilia
 
 ## 🏗 Actors and Architecture  
 
 The main actors of the project are the *bus stop*, the *bus stop help button*, *the bus itself* and the *main server*.
+
+|Actor|Component|Link|
+|-|-|-|
+|Main Server [(Overview)](#main-server-)|Flask Server|[Details and code](bus-server)|
+||Prophet forecasting| [Details and code](forecasting_prophet)
+Bus Stop [(Overview)](#bus-stop-)|Arduino|[Details and code](bus-station-nfc-reader)|
+Bus Stop Help button [(Overview)](#bus-stop-help-button-)| Esp32 | [Details and code](bus-stop-button)
+|Bus Client [(Overview)](#bus-client-)|GPS Tracker|[Details and code](bus-tracker-client)|
+
 
 ![System Design and Architecture - Created with Miro](img/architecture.jpg)
 
@@ -37,7 +46,7 @@ The count of the people in the crowd is presented to the system administrators w
 
 For the developers, the server has an API endpoint that let to fetch real-time data from the stops such as the number of people there.
 
-Lastly, we develop with Prophet a **forecasting model** [[code]](forecasting_prophet) to predict the number of busy seats in a future moment based on the past recorded data. Since it is just a demo project the recorded data was generated using a script, so the model is not accurate.
+Lastly, we develop with Prophet a **forecasting model** [[code]](forecasting_prophet) to predict the number of people waiting in the stops in a future moment based on the past recorded data. Since it is just a demo project the recorded data was generated using a script, so the model is not accurate.
 
 ### Bus Stop 🚏
 

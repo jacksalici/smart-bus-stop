@@ -2,7 +2,6 @@
 
 ![Esp 32 powered button help board](../img/button.jpg)
 
-
 Each stop is provided with an ESP32 board that let people toggle a button to call for help. The board is separated from the Arduino NFC reader for the sake of modularity and the decoupling principle.
 A led is present to ease the reading of the button state.
 
