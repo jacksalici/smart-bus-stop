@@ -42,7 +42,7 @@ The server receives via MQTT the location of each bus and fetches using Open Rou
 
 From each station, moreover, the server receives the number of people awaiting there and if someone requests help using the specific button. The request is forwarded via MQTT to the upcoming bus.
 
-The count of the people in the crowd is presented to the system administrators with a specific page. Bus lines that can't manage all the people are highlighted.
+The count of the people in the crowd is presented to the system administrators on a specific page. Bus lines that can't manage all the people are highlighted.
 
 For the developers, the server has an API endpoint that let to fetch real-time data from the stops such as the number of people there.
 
@@ -52,7 +52,7 @@ Lastly, we develop with Prophet a **forecasting model** [[code]](forecasting_pro
 
 Each bus stop has a kiosk loaded on the server offered front-end. Users can use a real-time-updated map to see the location of the bus, along with the actual number of busy seats on that bus.
 
-Users can book a seat by logging in using an NFC reader. An **Arduino board** [[code]](bus-station-nfc-reader) sends to the serial port the UID of the NFC tag (or smartphone). It is read via front-end using the experimental web serial port API. Since the project is just a demo we used the UID as the authentication key ignoring that it would be a severe vulnerability in an actual realization.
+Users can book a seat by logging in using an NFC reader. An **Arduino board** [[code]](bus-station-nfc-reader) sends to the serial port the UID of the NFC tag (or smartphone). It is read on the front-end using the experimental web serial port API. Since the project is just a demo we used the UID as the authentication key ignoring that it would be a severe vulnerability in an actual realization.
 
 ### Bus Stop Help Button 🕹
 
@@ -62,7 +62,7 @@ The same ESP32 board read the value of a potentiometer that simulates the presen
 
 ### Bus Client 🚍  
 
-Each bus is tracked with a GPS sensor. For the demo we created a smartphone app [[code]](bus-tracker-client) that sends the location and that allows the user to set the number of busy seats and the next stop.
+Each bus is tracked with a GPS sensor. For the demo, we created a smartphone app [[code]](bus-tracker-client) that sends the location and that allows the user to set the number of busy seats and the next stop.
 
 ## 💡 Acknowledgement
 - [Smart Bus Stops as Interconnected Public Spaces for Increasing Social Inclusiveness and Quality of Life of Elder Users](https://www.mdpi.com/2624-6511/3/2/23)
@@ -76,4 +76,4 @@ Other useful links:
 - [https://www.edmonton.ca/projects_plans/transit/smart-bus-initiative](https://www.edmonton.ca/projects_plans/transit/smart-bus-initiative)
 - [https://extendedmonaco.com/en/project/smart-bus-shelters-a-clever-combination-of-infrastructure-and-digital-technology/](https://extendedmonaco.com/en/project/smart-bus-shelters-a-clever-combination-of-infrastructure-and-digital-technology/)
 - [https://urban-digital.co.il/SmartBusStop.html](https://urban-digital.co.il/SmartBusStop.html)
-- [https://oemkiosks.com/?page=smart-bus-shelters](https://oemkiosks.com/?page=smart-bus-shelters)
+- [https://oemkiosks.com/?page=smart-bus-shelters](https://oemkiosks.com/?page=smart-bus-shelters)––
