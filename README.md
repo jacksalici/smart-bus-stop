@@ -17,7 +17,7 @@ Once the network of smart stops is established, it will be possible to perform s
 
 The project has been developed on Arduino and Esp32 dev-board. Every part works smoothly but some parts have been simplified since more realistic solutions would have been too time-expensive.
 
-**Authors**: Giacomo Salici @jacksalici and Francesco Marcucci @MRTCc, University of Modena and Reggio Emilia
+**Authors**: Giacomo Salici [@jacksalici](https://github.com/jacksalici) and Francesco Marcucci [@MRTCc](https://github.com/MRTCc), University of Modena and Reggio Emilia
 
 ## 🏗 Actors and Architecture  
 
@@ -63,6 +63,10 @@ The same ESP32 board read the value of a potentiometer that simulates the presen
 ### Bus Client 🚍  
 
 Each bus is tracked with a GPS sensor. For the demo, we created a smartphone app [[code]](bus-tracker-client) that sends the location and that allows the user to set the number of busy seats and the next stop.
+
+## 📺 Presentations
+
+During the final presentation, we were asked to present a [commercial/marketing-oriented presentation](presentation-commercial.pdf) and a more [technical one](presentation-technical.pdf). Both are written in Italian.
 
 ## 💡 Acknowledgement
 - [Smart Bus Stops as Interconnected Public Spaces for Increasing Social Inclusiveness and Quality of Life of Elder Users](https://www.mdpi.com/2624-6511/3/2/23)
