@@ -2,6 +2,8 @@
 
 **To improve the mobility of citizens in a city, enabling faster, easier and safer travel, and at the same time, lower management costs for the administrators.**
 
+![](img/cover.svg)
+
 ## 📝 Abstract  
 
 This project has been made as the final project for the Master's Degree in CS IoT course. It focuses on improving public transportation, particularly through city buses. The aim is to create a smart bus stop, which allows easier access to the service and enables (through a network of such stations) an enhancement of the service.
