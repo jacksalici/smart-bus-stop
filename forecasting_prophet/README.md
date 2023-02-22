@@ -56,7 +56,7 @@ Some example charts (if you run `model_plot.py`):
 
 ### 3. Model prediction
 `model_predict.py` makes predictions.
-The script expects a train model file (json-serilized) and an output file in csv format (`timestamp, number of people`):
+The script expects a train model file (json-serialized) and an output file in csv format (`timestamp, number of people`):
 ```bash
 python model_predict.py model_file.json data_file.csv
 ```
