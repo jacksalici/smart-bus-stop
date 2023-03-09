@@ -6,17 +6,17 @@
 
 ## 📝 Abstract  
 
-This project has been developed as the final project for the Master's Degree in CS IoT course. It focuses on improving public transportation, particularly through city buses. The aim is to create a smart bus stop, which allows easier access to the service and enables (through a network of such stations) an enhancement of the service.
+This project was developed as the final project for the Master's Degree in the CS IoT course. Its main focus is to improve public transportation, particularly city buses. The aim is to create a smart bus stop that enables easier access to the service and enhances it through a network of such stations.
 
-In the authors' project vision, each smart bus stop will be equipped with a digital kiosk/totem device and a button board. A solar panel could also be provided to the station to make it self-sufficient during sunny hours.
+In our vision, each smart bus stop will be equipped with a digital kiosk/totem device and a button board. A solar panel may also be provided to the station to make it self-sufficient during sunny hours.
 
-The totem would allow people to see the real-time locations of public services, along with the estimated transit times through the various stations. It also makes it possible to purchase tickets on the spot. An NFC/RFID reader makes the auth possible both with the smartphone and with other physical devices (provided, for example, to the elderly who don't own a modern mobile).
+The totem will allow people to see the real-time locations of public services, along with the estimated transit times through various stations. It will also make it possible to purchase tickets on the spot. An NFC/RFID reader will make authentication possible with smartphones and other physical devices (provided, for example, to the elderly who do not own modern mobiles).
 
-For people with disabilities, a button is provided to alert the bus driver to give help or attention.
+A button will be provided for people with disabilities to alert the bus driver to give help or attention.
 
-Once the network of smart stops is established, it would be possible to perform statistical analysis and forecasting on the use of a certain line, allowing better allocation of resources (add/delete a bus, "dynamic" lines, etc). The project aims to reduce maintenance costs for public administrations. An ideal solution uses an AI-powered camera to count people waiting at the stops and a server that checks if the maximum capacity of the upcoming bus would be exceeded, so calling an additional bus.
+Once the network of smart stops is established, it will be possible to perform statistical analysis and forecasting on the use of a certain line, allowing better allocation of resources (such as adding or deleting a bus, "dynamic" lines, etc). The project aims to reduce maintenance costs for public administrations. An ideal solution uses an AI-powered camera to count people waiting at the stops and a server that checks if the upcoming bus's maximum capacity would be exceeded, calling for an additional bus.
 
-The project has been developed on Arduino and Esp32 dev-board. Although all the parts work smoothly, some components have been simplified (eg omitting some security best practices) since more realistic solutions would have been too time-expensive.
+The project was developed on Arduino and Esp32 dev-board. Although all the parts work smoothly, some components have been simplified (e.g., omitting some security best practices) since more realistic solutions would have been too time-consuming.
 
 **Authors**: Giacomo Salici [@jacksalici](https://github.com/jacksalici) and Francesco Marcucci [@MRTCc](https://github.com/MRTCc), University of Modena and Reggio Emilia
 
